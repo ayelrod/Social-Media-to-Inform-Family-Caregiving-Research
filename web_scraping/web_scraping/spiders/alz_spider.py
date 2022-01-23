@@ -1,9 +1,12 @@
 import scrapy
 import re
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from post import Post
 
 class AlzSpider(scrapy.Spider):
     name = "alz"
-    number_of_pages = 300 # number of pages to scrape
+    number_of_pages = 300 # number of pages to scrape (must be from 1 - 1000)
     
     def start_requests(self):
         urls = []
@@ -13,8 +16,7 @@ class AlzSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
             
     def parse(self, response):
-        
-        if not self.hasBeenVisited(response.request.url):
+        if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url + "#ekbottomfooter")):
             dates = []
             posts = []
             
@@ -31,15 +33,13 @@ class AlzSpider(scrapy.Spider):
                 if body != "":
                     posts.append(body)
             
-            for i in range(len(dates)):
-                yield {
-                    "date" : dates[i],
-                    "body" : posts[i],
-                    "url" : response.request.url
-                }
+            if len(dates) == len(posts):
+                for i in range(len(dates)):
+                    post = Post(dates[i], posts[i], response.request.url)
+                    yield post.toJSON()
         
-        for a in response.css("td.alt2 a"):
-            yield response.follow(a, callback=self.parse)
+            for a in response.css("td.alt2 a"):
+                yield response.follow(a, callback=self.parse)
             
         for a in response.css("tr.post td a"):
             yield response.follow(a, callback=self.parse)
