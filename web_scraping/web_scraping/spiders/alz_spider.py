@@ -55,5 +55,5 @@ class AlzSpider(scrapy.Spider):
     
     def hasBeenVisited(self, url):
         # TODO: Query database to see if the url exists
-        return false
+        return False
         
