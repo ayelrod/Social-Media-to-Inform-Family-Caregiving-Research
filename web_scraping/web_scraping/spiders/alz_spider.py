@@ -16,7 +16,7 @@ class AlzSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
             
     def parse(self, response):
-        if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url + "#ekbottomfooter")):
+        if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
             dates = []
             posts = []
             
