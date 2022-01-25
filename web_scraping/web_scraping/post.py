@@ -2,7 +2,7 @@ from datetime import datetime
 
 class Post:
     def __init__(self, date, body, url):
-        self.date = datetime.strptime(date, "%A, %B %d, %Y %I:%M %p")
+        self.date = date
         self.body = body
         self.url = url
         

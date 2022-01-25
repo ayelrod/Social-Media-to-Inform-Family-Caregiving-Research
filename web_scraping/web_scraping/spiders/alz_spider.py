@@ -2,7 +2,7 @@ import scrapy
 import re
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from post import Post
+from alz_post import AlzPost
 
 class AlzSpider(scrapy.Spider):
     name = "alz"
@@ -35,7 +35,7 @@ class AlzSpider(scrapy.Spider):
             
             if len(dates) == len(posts):
                 for i in range(len(dates)):
-                    post = Post(dates[i], posts[i], response.request.url)
+                    post = AlzPost(dates[i], posts[i], response.request.url)
                     yield post.toJSON()
         
             for a in response.css("td.alt2 a"):
