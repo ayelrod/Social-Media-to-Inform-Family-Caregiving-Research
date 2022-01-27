@@ -12,4 +12,8 @@ class Post:
             "body" : self.body,
             "url" : self.url
         }
+        
+    def writeToDatabase(self):
+        # TODO: Write post to database
+        pass
     
