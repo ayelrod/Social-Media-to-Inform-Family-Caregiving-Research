@@ -1,19 +1,18 @@
-from datetime import datetime
+from abc import ABC, abstractmethod
 
-class Post:
-    def __init__(self, date, body, url):
-        self.date = date
-        self.body = body
-        self.url = url
-        
+class Post(ABC):
+    """ Post is an abstract class to 
+        represent a post in the sites
+        we scrape
+    """
+    
+    @abstractmethod
     def toJSON(self):
-        return {
-            "date" : self.date.strftime("%Y-%m-%d %H:%M:%S"),
-            "body" : self.body,
-            "url" : self.url
-        }
+        pass
         
     def writeToDatabase(self):
+        """ Write the post to the database
+        """
         # TODO: Write post to database
         pass
     
