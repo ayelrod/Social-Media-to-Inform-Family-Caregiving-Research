@@ -41,6 +41,9 @@ class AlzSpider(scrapy.Spider):
         if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
             dates = []
             posts = []
+            user_names = []
+            user_dates = []
+            user_num_posts = []
             
             # Get title of posts
             title = ""
@@ -59,6 +62,19 @@ class AlzSpider(scrapy.Spider):
                 body = self.clean(body)
                 if body != "":
                     posts.append(body)
+                    
+            # Get user_name of posters
+            for name in response.css("td b a"):
+                user_names.append(self.clean(name.get()))
+                
+            # Get user_date_joined and user_num_posts of posters
+            for user_stats in response.css("td.UserBox").getall():
+                user_stats = self.clean(user_stats)
+                user_stats = user_stats.replace(" ", "")
+                user_date_joined = user_stats[user_stats.find("Joined:") + 7 : user_stats.find("Posts:")]
+                user_num = user_stats[user_stats.find("Posts:") + 6 : ]
+                user_dates.append(user_date_joined.strip())
+                user_num_posts.append(int(user_num))
             
             # Yield posts
             if len(dates) == len(posts):
@@ -66,7 +82,7 @@ class AlzSpider(scrapy.Spider):
                     # If the post is not the first one in the list, it is a reply
                     # If the url is not the first page of replies, the posts are all replies
                     reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-                    post = AlzPost(dates[i], title, posts[i], reply, response.request.url.rstrip("#ekbottomfooter"))
+                    post = AlzPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
                     yield post.toJSON()    
             
             # Follow links to reply pages

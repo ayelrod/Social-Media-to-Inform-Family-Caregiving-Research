@@ -8,7 +8,7 @@ class AlzPost(Post):
         www.alzconnected.org website
     """
     
-    def __init__(self, date_string: str, title: str, body: str, reply: bool, url: str):
+    def __init__(self, date_string: str, title: str, body: str, reply: bool, user_name: str, user_date_joined_string: str, user_num_posts: int, url: str):
         """Constructor for the AlzPost class
 
         Args:
@@ -16,6 +16,9 @@ class AlzPost(Post):
             title (str): The title of the post
             body (str): The text body of the post
             reply (bool): true if the post is a reply | false if the post is the original post
+            user_name (str): The username of the poster
+            user_date_joined_string (str): The date the poster joined the site
+            user_num_posts (int): The number of posts the user has made
             url (str): The url where the post can be found
         """
         date = datetime.strptime(date_string, "%A %B %d %Y %I:%M %p")
@@ -23,6 +26,9 @@ class AlzPost(Post):
         self.title = title
         self.body = body
         self.reply = reply
+        self.user_name = user_name
+        self.user_date_joined = datetime.strptime(user_date_joined_string, "%m/%d/%Y")
+        self.user_num_posts = user_num_posts
         self.url = url
         
     def toJSON(self):
@@ -36,6 +42,9 @@ class AlzPost(Post):
             "title" : self.title,
             "body" : self.body,
             "reply" : self.reply,
+            "user_name" : self.user_name,
+            "user_date_joined" : self.user_date_joined.strftime("%Y-%m-%d"),
+            "user_num_posts" : self.user_num_posts,
             "url" : self.url
         }
         
