@@ -8,7 +8,7 @@ class AlzPost(Post):
         www.alzconnected.org website
     """
     
-    def __init__(self, date_string: str, body: str, url: str):
+    def __init__(self, date_string: str, body: str, reply: bool, url: str):
         """Constructor for the AlzPost class
 
         Args:
@@ -19,6 +19,7 @@ class AlzPost(Post):
         date = datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p")
         self.date = date
         self.body = body
+        self.reply = reply
         self.url = url
         
     def toJSON(self):
@@ -30,6 +31,7 @@ class AlzPost(Post):
         return {
             "date" : self.date.strftime("%Y-%m-%d %H:%M:%S"),
             "body" : self.body,
+            "reply" : self.reply,
             "url" : self.url
         }
         

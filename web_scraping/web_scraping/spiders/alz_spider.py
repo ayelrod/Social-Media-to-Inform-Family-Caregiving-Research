@@ -5,17 +5,39 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from alz_post import AlzPost
 
 class AlzSpider(scrapy.Spider):
+    """ AlzSpider is the spider for crawling
+        www.alzconnected.org
+        It can be edited to manage the number
+        of pages to scrape.
+    """
     name = "alz"
-    number_of_pages = 300 # number of pages to scrape (must be from 1 - 1000)
+    start_page = 1 # First page to scrape
+    end_page = 300 # Last page to scrape
     
     def start_requests(self):
+        """ Starts the web scraping for each
+            starter url created
+            
+        Yields:
+            dict: The yield output of self.parse
+        """
         urls = []
-        for i in range(1, self.number_of_pages):
+        for i in range(self.start_page, self.end_page):
             urls.append("https://www.alzconnected.org/discussion.aspx?g=topics&f=151&page=" + str(i))
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
             
-    def parse(self, response):
+    def parse(self, response: scrapy.http.response.html.HtmlResponse):
+        """ Parses the responses we get from
+            crawling. Extracts the information from
+            a web page and yields it.
+
+        Args:
+            response (scrapy.http.response.html.HtmlResponse): The response from links that are followed
+
+        Yields:
+            dict: The information that is extracted in JSON form, represented with a Python dict.
+        """
         if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
             dates = []
             posts = []
@@ -27,24 +49,38 @@ class AlzSpider(scrapy.Spider):
                     dates.append(date)
             
             # Get body of post 
-            for post in response.css("td.message"):
-                body = post.get()
+            for post in response.selector.css("td.message"):
+                body = self.removeQuote(post)
                 body = self.clean(body)
                 if body != "":
                     posts.append(body)
             
+            # Yield posts
             if len(dates) == len(posts):
                 for i in range(len(dates)):
-                    post = AlzPost(dates[i], posts[i], response.request.url)
-                    yield post.toJSON()
-        
+                    reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
+                    post = AlzPost(dates[i], posts[i], reply, response.request.url.rstrip("#ekbottomfooter"))
+                    yield post.toJSON()    
+            
+            # Follow links to reply pages
             for a in response.css("td.alt2 a"):
                 yield response.follow(a, callback=self.parse)
-            
+        
+        # Follow links to posts   
         for a in response.css("tr.post td a"):
             yield response.follow(a, callback=self.parse)
         
-    def clean(self, text):
+    def clean(self, text: str):
+        """ Cleans the text passed in.
+            Removes the html artifacts and
+            some escape characters + whitespace.
+
+        Args:
+            text (str): The text to be cleaned
+
+        Returns:
+            str: The cleaned up text
+        """
         text = re.sub('<[^>]+>', ' ', text)
         characters = ['\n', '\r', '\t']
         for character in characters:
@@ -52,6 +88,27 @@ class AlzSpider(scrapy.Spider):
         text = text.lstrip()
         text = text.rstrip()
         return text
+    
+    def removeQuote(self, body: scrapy.selector.unified.Selector):
+        """ Removes quote blocks from posts.
+            Quote blocks in posts are replies
+            that include the message being replied
+            to in an html class. This is specific
+            to the www.alzconnected.org site.
+
+        Args:
+            body (): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        quote = body.css("div.quote")
+
+        if quote:
+            quote = quote[0].root
+            quote.getparent().remove(quote)
+
+        return body.extract()
     
     def hasBeenVisited(self, url):
         # TODO: Query database to see if the url exists
