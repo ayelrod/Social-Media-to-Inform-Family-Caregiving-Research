@@ -18,7 +18,7 @@ class AlzPost(Post):
             reply (bool): true if the post is a reply | false if the post is the original post
             url (str): The url where the post can be found
         """
-        date = datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p")
+        date = datetime.strptime(date_string, "%A %B %d %Y %I:%M %p")
         self.date = date
         self.title = title
         self.body = body

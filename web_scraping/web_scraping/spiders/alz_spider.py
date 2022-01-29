@@ -89,7 +89,7 @@ class AlzSpider(scrapy.Spider):
             str: The cleaned up text
         """
         text = re.sub('<[^>]+>', ' ', text)
-        characters = ['\n', '\r', '\t']
+        characters = ['\n', '\r', '\t', ',']
         for character in characters:
             text = text.replace(character, "")
         text = text.lstrip()
