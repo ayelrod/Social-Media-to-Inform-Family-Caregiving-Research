@@ -42,13 +42,18 @@ class AlzSpider(scrapy.Spider):
             dates = []
             posts = []
             
-            # Get date of post
+            # Get title of posts
+            title = ""
+            if len(response.css("td.header1 div table td")) != 0:
+                title = self.clean(response.css("td.header1 div table td").get())
+            
+            # Get dates of posts
             for header in response.css("td.postheader::text").getall():
                 date = self.clean(header)
                 if date != "":
                     dates.append(date)
             
-            # Get body of post 
+            # Get bodies of posts
             for post in response.selector.css("td.message"):
                 body = self.removeQuote(post)
                 body = self.clean(body)
@@ -58,8 +63,10 @@ class AlzSpider(scrapy.Spider):
             # Yield posts
             if len(dates) == len(posts):
                 for i in range(len(dates)):
+                    # If the post is not the first one in the list, it is a reply
+                    # If the url is not the first page of replies, the posts are all replies
                     reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-                    post = AlzPost(dates[i], posts[i], reply, response.request.url.rstrip("#ekbottomfooter"))
+                    post = AlzPost(dates[i], title, posts[i], reply, response.request.url.rstrip("#ekbottomfooter"))
                     yield post.toJSON()    
             
             # Follow links to reply pages

@@ -8,16 +8,19 @@ class AlzPost(Post):
         www.alzconnected.org website
     """
     
-    def __init__(self, date_string: str, body: str, reply: bool, url: str):
+    def __init__(self, date_string: str, title: str, body: str, reply: bool, url: str):
         """Constructor for the AlzPost class
 
         Args:
             date_string (str): The date/time the post was made
+            title (str): The title of the post
             body (str): The text body of the post
+            reply (bool): true if the post is a reply | false if the post is the original post
             url (str): The url where the post can be found
         """
         date = datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p")
         self.date = date
+        self.title = title
         self.body = body
         self.reply = reply
         self.url = url
@@ -30,6 +33,7 @@ class AlzPost(Post):
         """
         return {
             "date" : self.date.strftime("%Y-%m-%d %H:%M:%S"),
+            "title" : self.title,
             "body" : self.body,
             "reply" : self.reply,
             "url" : self.url
