@@ -12,7 +12,7 @@ class AlsSpider(scrapy.Spider):
     """
     name = "als"
     start_page = 2 # First page to scrape
-    end_page = 2 # Last page to scrape
+    end_page = 5 # Last page to scrape
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -39,16 +39,6 @@ class AlsSpider(scrapy.Spider):
         Yields:
             dict: The information that is extracted in JSON form, represented with a Python dict.
         """
-        # for post in response.css('div.structItem.structItem'):
-        #     yield {
-        #         'title': post.css('div.structItem-cell.structItem-cell--main div.structItem-title a::text').get(), 
-        #         'username': post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li a::text').get(),
-        #         'post_date':  post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li.structItem-startDate a').xpath("//time/@datetime").get(),
-        #         'post_text': response.css("div.block-body article.message div.message-inner div.message-cell.message-cell--main div.message-main div.message-content div.message-userContent article.message-body div.bbWrapper::text").get()
-        #     }
-        #     next_page = post.css('div.structItem-cell.structItem-cell--main div.structItem-title a::attr(href)').get()
-        #     if next_page is not None:
-        #        yield response.follow(next_page, callback=self.parse)
 
         if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
             dates = []
@@ -63,14 +53,14 @@ class AlsSpider(scrapy.Spider):
                 title = self.clean(response.css('div.p-title h1::text').get())
             
             # Get dates of posts
-            for header in response.css('div.message-main header.message-attribution ul.message-attribution-main li.u-concealed a time::text').getall():
+            for header in response.css('div.message-main header.message-attribution ul.message-attribution-main li.u-concealed a time::attr(data-date-string)').getall():
                 date = self.clean(header)
                 if date != "":
                     date.replace(',', '')
                     dates.append(date)
             
             # Get bodies of posts
-            for post in response.css("div.bbWrapper::text"):
+            for post in response.css("div.bbWrapper"):
                 body = self.removeQuote(post)
                 body = self.clean(body)
                 if body != "":
@@ -78,7 +68,7 @@ class AlsSpider(scrapy.Spider):
                     
                     
             # Get user_name of posters
-            for name in response.css('div.message-userDetails h4 a.username').getall():
+            for name in response.css("article::attr(data-author)").getall():
                 user_names.append(self.clean(name))
                 
             # Get user_date_joined and user_num_posts of posters
@@ -96,9 +86,7 @@ class AlsSpider(scrapy.Spider):
             
             # Yield posts
             if len(dates) == len(posts):
-                print(len(user_dates))
-                print(len(user_num_posts))
-                print(len(user_names))
+                
                 for i in range(len(dates)):
                     # If the post is not the first one in the list, it is a reply
                     # If the url is not the first page of replies, the posts are all replies
@@ -106,13 +94,17 @@ class AlsSpider(scrapy.Spider):
                     post = AlsPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
                     yield post.toJSON()    
             
-        #     # Follow links to reply pages
-        #     for a in response.css("div.pageNav ul.pageNav-main li a::attr(href)").getall():
-        #         yield response.follow(a, callback=self.parse)
+            # Follow links to reply pages
+            if response.css("div.p-title h1::text").get().strip() != 'Current caregivers':
+                if response.css("div.pageNav a.pageNav-jump.pageNav-jump--next::attr(href)"):
+                    a = response.css("div.pageNav a.pageNav-jump.pageNav-jump--next::attr(href)")[0]
+                    yield response.follow(a, callback=self.parse)
         
         # Follow links to posts   
-        for a in response.css("div.structItem-title a::attr(href)").getall():
-            yield response.follow(a, callback=self.parse)
+        if response.css("div.p-title h1::text").get().strip() == 'Current caregivers':
+            for a in response.css("div.structItem-title a::attr(href)"):
+                    yield response.follow(a, callback=self.parse)
+                
 
     def clean(self, text: str):
         """ Cleans the text passed in.

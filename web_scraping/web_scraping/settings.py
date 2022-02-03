@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = 'web_scraping.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'web_scraping (+http://www.yourdomain.com)'
+USER_AGENT = 'web_scraping (Scrapy/VERSION (+https://scrapy.org))'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
