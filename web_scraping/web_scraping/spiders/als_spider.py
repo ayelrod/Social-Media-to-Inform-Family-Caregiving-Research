@@ -2,7 +2,7 @@ import scrapy
 import re
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from alz_post import AlzPost
+from als_post import AlsPost
 
 class AlsSpider(scrapy.Spider):
     """ AlsSpider is the spider for crawling
@@ -12,7 +12,7 @@ class AlsSpider(scrapy.Spider):
     """
     name = "als"
     start_page = 2 # First page to scrape
-    end_page = 3 # Last page to scrape
+    end_page = 2 # Last page to scrape
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -26,6 +26,7 @@ class AlsSpider(scrapy.Spider):
             urls.append("https://www.alsforums.com/community/forums/current-caregivers.59/page-" + str(i))
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
+
             
     def parse(self, response):
         """ Parses the responses we get from
@@ -38,67 +39,80 @@ class AlsSpider(scrapy.Spider):
         Yields:
             dict: The information that is extracted in JSON form, represented with a Python dict.
         """
-        for post in response.css('div.structItem.structItem'):
-            yield {
-                'title': post.css('div.structItem-cell.structItem-cell--main div.structItem-title a::text').get(), 
-                'username': post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li a::text').get(),
-                'post_date':  post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li.structItem-startDate a').xpath("//time/@datetime").get()
-            }
-        
-        # if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
-        #     dates = []
-        #     posts = []
-        #     user_names = []
-        #     user_dates = []
-        #     user_num_posts = []
+        # for post in response.css('div.structItem.structItem'):
+        #     yield {
+        #         'title': post.css('div.structItem-cell.structItem-cell--main div.structItem-title a::text').get(), 
+        #         'username': post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li a::text').get(),
+        #         'post_date':  post.css('div.structItem-cell.structItem-cell--main div.structItem-minor ul.structItem-parts li.structItem-startDate a').xpath("//time/@datetime").get(),
+        #         'post_text': response.css("div.block-body article.message div.message-inner div.message-cell.message-cell--main div.message-main div.message-content div.message-userContent article.message-body div.bbWrapper::text").get()
+        #     }
+        #     next_page = post.css('div.structItem-cell.structItem-cell--main div.structItem-title a::attr(href)').get()
+        #     if next_page is not None:
+        #        yield response.follow(next_page, callback=self.parse)
+
+        if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
+            dates = []
+            posts = []
+            user_names = []
+            user_dates = []
+            user_num_posts = []
             
-        #     # Get title of posts
-        #     title = ""
-        #     if len(response.css('div.structItem.structItem div.structItem-cell.structItem-cell--main div.structItem-title a::text')) != 0:
-        #         title = self.clean(response.css("td.header1 div table td").get())
+            # Get title of posts
+            title = ""
+            if len(response.css('div.p-title h1::text')) != 0:
+                title = self.clean(response.css('div.p-title h1::text').get())
             
-        #     # Get dates of posts
-        #     for header in response.css("td.postheader::text").getall():
-        #         date = self.clean(header)
-        #         if date != "":
-        #             dates.append(date)
+            # Get dates of posts
+            for header in response.css('div.message-main header.message-attribution ul.message-attribution-main li.u-concealed a time::text').getall():
+                date = self.clean(header)
+                if date != "":
+                    date.replace(',', '')
+                    dates.append(date)
             
-        #     # Get bodies of posts
-        #     for post in response.selector.css("td.message"):
-        #         body = self.removeQuote(post)
-        #         body = self.clean(body)
-        #         if body != "":
-        #             posts.append(body)
+            # Get bodies of posts
+            for post in response.css("div.bbWrapper::text"):
+                body = self.removeQuote(post)
+                body = self.clean(body)
+                if body != "":
+                    posts.append(body)
                     
-        #     # Get user_name of posters
-        #     for name in response.css("td b a"):
-        #         user_names.append(self.clean(name.get()))
+                    
+            # Get user_name of posters
+            for name in response.css('div.message-userDetails h4 a.username').getall():
+                user_names.append(self.clean(name))
                 
-        #     # Get user_date_joined and user_num_posts of posters
-        #     for user_stats in response.css("td.UserBox").getall():
-        #         user_stats = self.clean(user_stats)
-        #         user_stats = user_stats.replace(" ", "")
-        #         user_date_joined = user_stats[user_stats.find("Joined:") + 7 : user_stats.find("Posts:")]
-        #         user_num = user_stats[user_stats.find("Posts:") + 6 : ]
-        #         user_dates.append(user_date_joined.strip())
-        #         user_num_posts.append(int(user_num))
+            # Get user_date_joined and user_num_posts of posters
+            for user_stats in response.css("div.message-userExtras"):
+                user_stats = user_stats.css("dd::text").getall()
+
+                for u in user_stats:
+                    u = self.clean(u)
+                    u = u.replace(" ", "")
+
+                user_date_joined = user_stats[0].replace(',', '')
+                user_num = user_stats[1].replace(',', '')
+                user_dates.append(user_date_joined.strip())
+                user_num_posts.append(int(user_num))
             
-        #     # Yield posts
-        #     if len(dates) == len(posts):
-        #         for i in range(len(dates)):
-        #             # If the post is not the first one in the list, it is a reply
-        #             # If the url is not the first page of replies, the posts are all replies
-        #             reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-        #             post = AlzPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
-        #             yield post.toJSON()    
+            # Yield posts
+            if len(dates) == len(posts):
+                print(len(user_dates))
+                print(len(user_num_posts))
+                print(len(user_names))
+                for i in range(len(dates)):
+                    # If the post is not the first one in the list, it is a reply
+                    # If the url is not the first page of replies, the posts are all replies
+                    reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
+                    post = AlsPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
+                    yield post.toJSON()    
             
         #     # Follow links to reply pages
-        #     for a in response.css("td.alt2 a"):
+        #     for a in response.css("div.pageNav ul.pageNav-main li a::attr(href)").getall():
         #         yield response.follow(a, callback=self.parse)
         
-        # # Follow links to posts   
-        # for a in response.css("tr.post td a"):
-        #     yield response.follow(a, callback=self.parse)
+        # Follow links to posts   
+        for a in response.css("div.structItem-title a::attr(href)").getall():
+            yield response.follow(a, callback=self.parse)
 
     def clean(self, text: str):
         """ Cleans the text passed in.
@@ -119,28 +133,28 @@ class AlsSpider(scrapy.Spider):
         text = text.rstrip()
         return text
     
-    # def removeQuote(self, body: scrapy.selector.unified.Selector):
-    #     """ Removes quote blocks from posts.
-    #         Quote blocks in posts are replies
-    #         that include the message being replied
-    #         to in an html class. This is specific
-    #         to the www.alzconnected.org site.
+    def removeQuote(self, body: scrapy.selector.unified.Selector):
+        """ Removes quote blocks from posts.
+            Quote blocks in posts are replies
+            that include the message being replied
+            to in an html class. This is specific
+            to the www.alzconnected.org site.
 
-    #     Args:
-    #         body (): [description]
+        Args:
+            body (): [description]
 
-    #     Returns:
-    #         [type]: [description]
-    #     """
-    #     quote = body.css("div.quote")
+        Returns:
+            [type]: [description]
+        """
+        quote = body.css("div.quote")
 
-    #     if quote:
-    #         quote = quote[0].root
-    #         quote.getparent().remove(quote)
+        if quote:
+            quote = quote[0].root
+            quote.getparent().remove(quote)
 
-    #     return body.extract()
+        return body.extract()
     
-    # def hasBeenVisited(self, url):
-    #     # TODO: Query database to see if the url exists
-    #     return False
+    def hasBeenVisited(self, url):
+        # TODO: Query database to see if the url exists
+        return False
         
