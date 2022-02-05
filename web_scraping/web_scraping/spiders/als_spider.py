@@ -12,7 +12,7 @@ class AlsSpider(scrapy.Spider):
     """
     name = "als"
     start_page = 2 # First page to scrape
-    end_page = 5 # Last page to scrape
+    end_page = 2 # Last page to scrape
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -46,6 +46,11 @@ class AlsSpider(scrapy.Spider):
             user_names = []
             user_dates = []
             user_num_posts = []
+            user_reason_joined = []
+            user_diagnosis = []
+            user_country = []
+            user_state = []
+            user_city = []
             
             # Get title of posts
             title = ""
@@ -73,16 +78,84 @@ class AlsSpider(scrapy.Spider):
                 
             # Get user_date_joined and user_num_posts of posters
             for user_stats in response.css("div.message-userExtras"):
-                user_stats = user_stats.css("dd::text").getall()
+                user_stats = user_stats.css("dl")
 
+                counter = 0
                 for u in user_stats:
-                    u = self.clean(u)
-                    u = u.replace(" ", "")
+                    stat = u.css("dt::text").get()
+                    stat = self.clean(stat)
+                    stat = stat.replace(" ", "")
+                    data = u.css("dd::text").get()
+                    data = self.clean(data)
 
-                user_date_joined = user_stats[0].replace(',', '')
-                user_num = user_stats[1].replace(',', '')
-                user_dates.append(user_date_joined.strip())
-                user_num_posts.append(int(user_num))
+                    if counter == 0 and stat == "Joined":
+                        user_dates.append(data) # maybe do something with a counter to deal with missing values...
+                        counter += 1
+                        continue
+                    elif counter == 0 and stat != "Joined":
+                        user_dates.append('')
+                        counter += 1
+
+                    if counter == 1 and stat == "Messages" :
+                        user_num_posts.append(int(data))
+                        counter += 1
+                        continue
+                    elif counter == 1 and stat != "Messages":
+                        user_num_posts.append('')
+                        counter += 1    
+                    
+                    if counter == 2 and stat == "Reason" :
+                        user_reason_joined.append(data)
+                        counter += 1
+                        continue
+                    elif counter == 2 and stat != "Reason":
+                        user_reason_joined.append('')
+                        counter += 1
+
+                    if counter == 3 and stat == "Diagnosis" :
+                        user_diagnosis.append(data)
+                        counter += 1
+                        continue
+                    elif counter == 3 and stat != "Diagnosis":
+                        user_diagnosis.append('')
+                        counter += 1
+
+                    if counter == 4 and stat == "Country" :
+                        user_country.append(data)
+                        counter += 1
+                        continue
+                    elif counter == 4 and stat != "Country":
+                        user_country.append('')
+                        counter += 1
+
+                    if counter == 5 and stat == "State" :
+                        user_state.append(data)
+                        counter += 1
+                        continue
+                    elif counter == 5 and stat != "State":
+                        user_state.append('')
+                        counter += 1     
+
+                    if counter == 6 and stat == "City" :
+                        user_city.append(data)
+                        counter += 1
+                        continue
+                    elif counter == 6 and stat != "City":
+                        user_city.append('')
+                        counter += 1
+                
+                if counter <= 6:
+                    if counter == 4:
+                        user_country.append('')
+                        user_state.append('')
+                        user_city.append('')
+                    if counter == 5:
+                        user_state.append('')
+                        user_city.append('')
+                    if counter == 6:
+                        user_city.append('')
+
+
             
             # Yield posts
             if len(dates) == len(posts):
@@ -91,7 +164,8 @@ class AlsSpider(scrapy.Spider):
                     # If the post is not the first one in the list, it is a reply
                     # If the url is not the first page of replies, the posts are all replies
                     reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-                    post = AlsPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
+                    post = AlsPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
+                                    user_diagnosis[i], user_country[i], user_state[i], user_city[i], response.request.url.rstrip("#ekbottomfooter"))
                     yield post.toJSON()    
             
             # Follow links to reply pages
