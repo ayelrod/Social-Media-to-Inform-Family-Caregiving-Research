@@ -1,5 +1,7 @@
 from datetime import datetime
 from post import Post
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 
 
 class AlzPost(Post):
@@ -29,8 +31,20 @@ class AlzPost(Post):
         self.user_name = user_name
         self.user_date_joined = datetime.strptime(user_date_joined_string, "%m/%d/%Y")
         self.user_num_posts = user_num_posts
+        self.post_id = self.extractPostID(url)
         self.url = url
         
+    def extractPostID(self, url: str):
+        """Extract the post_id from the url.
+            The post_id is under the 't' tag
+
+        Args:
+            url (str): the url with the post_id
+        """
+        parsed_url = urlparse(url)
+        post_id = parse_qs(parsed_url.query)['t'][0]
+        return post_id
+    
     def toJSON(self):
         """Get the post in JSON form
 
@@ -45,6 +59,7 @@ class AlzPost(Post):
             "user_name" : self.user_name,
             "user_date_joined" : self.user_date_joined.strftime("%Y-%m-%d"),
             "user_num_posts" : self.user_num_posts,
+            "post_id" : self.post_id,
             "url" : self.url
         }
         
