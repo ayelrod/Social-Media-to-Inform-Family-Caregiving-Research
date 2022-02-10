@@ -156,7 +156,8 @@ class AlsSpider(scrapy.Spider):
                         user_city.append('')
 
 
-            
+            url = response.request.url.rstrip("#ekbottomfooter")
+            post_id = self.getPostID(url)
             # Yield posts
             if len(dates) == len(posts):
                 
@@ -164,7 +165,7 @@ class AlsSpider(scrapy.Spider):
                     # If the post is not the first one in the list, it is a reply
                     # If the url is not the first page of replies, the posts are all replies
                     reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-                    post = AlsPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
+                    post = AlsPost(post_id, dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
                                     user_diagnosis[i], user_country[i], user_state[i], user_city[i], response.request.url.rstrip("#ekbottomfooter"))
                     yield post.toJSON()    
             
@@ -179,6 +180,20 @@ class AlsSpider(scrapy.Spider):
             for a in response.css("div.structItem-title a::attr(href)"):
                     yield response.follow(a, callback=self.parse)
                 
+    def getPostID(self, url):
+        end = 0
+        start = 0
+        for i in range(len(url)-1, -1, -1):
+            if url[i] == '/':
+                end = i
+                break
+        i = end-1 
+        while i >= 0:
+            if url[i] == '.':
+                start = i
+                break
+            i -= 1
+        return url[i+1:end]
 
     def clean(self, text: str):
         """ Cleans the text passed in.
@@ -223,4 +238,5 @@ class AlsSpider(scrapy.Spider):
     def hasBeenVisited(self, url):
         # TODO: Query database to see if the url exists
         return False
-        
+    
+    
