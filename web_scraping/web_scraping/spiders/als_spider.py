@@ -12,7 +12,7 @@ class AlsSpider(scrapy.Spider):
     """
     name = "als"
     start_page = 2 # First page to scrape
-    end_page = 2 # Last page to scrape
+    end_page = 223 # Last page to scrape
     
     def start_requests(self):
         """ Starts the web scraping for each
