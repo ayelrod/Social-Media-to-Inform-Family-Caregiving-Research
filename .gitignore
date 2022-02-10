@@ -1,2 +1,5 @@
 test.json
-*.pyc 
+__pycache__/
+*.pyc
+web_scraping/web_scraping/__pycache__/settings.cpython-38.pyc
+web_scraping/web_scraping/__pycache__/__init__.cpython-38.pyc
