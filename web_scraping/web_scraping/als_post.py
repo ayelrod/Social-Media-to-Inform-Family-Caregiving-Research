@@ -1,6 +1,10 @@
 from datetime import datetime
 from post import Post
+from mongoDB import MongoDB
+import pymongo
 
+# GLOBAL VARIABLE
+database = MongoDB() # Create connection to database
 
 class AlsPost(Post):
     """ AlzPost implements the Post class
@@ -68,6 +72,9 @@ class AlsPost(Post):
     def writeToDatabase(self):
         """ Write the post to the database
         """
-        # TODO: Write post to database
-        pass
+        """ Write the post to the database
+        """
+        collection = database.db["AlsForums"]
+        update = {"$set": self.toJSON()} # it is important to use $set in your update
+        collection.update(self.toJSON(), update, upsert=True)
         

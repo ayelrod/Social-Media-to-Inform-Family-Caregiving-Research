@@ -2,7 +2,11 @@ from datetime import datetime
 from post import Post
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
+from mongoDB import MongoDB
+import pymongo
 
+# GLOBAL VARIABLE
+database = MongoDB() # Create connection to database
 
 class AlzPost(Post):
     """ AlzPost implements the Post class
@@ -66,6 +70,7 @@ class AlzPost(Post):
     def writeToDatabase(self):
         """ Write the post to the database
         """
-        # TODO: Write post to database
-        pass
+        collection = database.db["AlzConnected"]
+        update = {"$set": self.toJSON()} # it is important to use $set in your update
+        collection.update(self.toJSON(), update, upsert=True)
         
