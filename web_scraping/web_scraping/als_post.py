@@ -65,3 +65,9 @@ class AlsPost(Post):
             "url" : self.url
         }
         
+    def writeToDatabase(self):
+        """ Write the post to the database
+        """
+        # TODO: Write post to database
+        pass
+        
