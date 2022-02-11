@@ -14,6 +14,7 @@ class AlzSpider(scrapy.Spider):
     start_page = 1 # First page to scrape
     end_page = 300 # Last page to scrape
     visited = set() # URLs that have been visited
+
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -87,6 +88,7 @@ class AlzSpider(scrapy.Spider):
                     # If the url is not the first page of replies, the posts are all replies
                     reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
                     post = AlzPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url.rstrip("#ekbottomfooter"))
+                    post.writeToDatabase()
                     yield post.toJSON()    
             
             # Follow links to reply pages

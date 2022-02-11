@@ -2,6 +2,8 @@ from datetime import datetime
 from post import Post
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
+from mongoDB import MongoDB
+import pymongo
 
 
 class AlzPost(Post):
@@ -33,6 +35,8 @@ class AlzPost(Post):
         self.user_num_posts = user_num_posts
         self.post_id = self.extractPostID(url)
         self.url = url
+        
+        self.database = MongoDB()
         
     def extractPostID(self, url: str):
         """Extract the post_id from the url.
@@ -66,6 +70,6 @@ class AlzPost(Post):
     def writeToDatabase(self):
         """ Write the post to the database
         """
-        # TODO: Write post to database
-        pass
+        collection = self.database.db["AlzConnected"]
+        collection.insert_one(self.toJSON())
         
