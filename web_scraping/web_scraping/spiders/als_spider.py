@@ -40,7 +40,7 @@ class AlsSpider(scrapy.Spider):
             dict: The information that is extracted in JSON form, represented with a Python dict.
         """
 
-        if not (self.hasBeenVisited(response.request.url) or self.hasBeenVisited(response.request.url.rstrip("#ekbottomfooter"))):
+        if not self.hasBeenVisited(response.request.url):
             dates = []
             posts = []
             user_names = []
@@ -156,7 +156,7 @@ class AlsSpider(scrapy.Spider):
                         user_city.append('')
 
 
-            url = response.request.url.rstrip("#ekbottomfooter")
+            url = response.request.url
             post_id = self.getPostID(url)
             # Yield posts
             if len(dates) == len(posts):

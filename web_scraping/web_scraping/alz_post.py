@@ -5,6 +5,8 @@ from urllib.parse import parse_qs
 from mongoDB import MongoDB
 import pymongo
 
+# GLOBAL VARIABLE
+database = MongoDB() # Create connection to database
 
 class AlzPost(Post):
     """ AlzPost implements the Post class
@@ -35,8 +37,6 @@ class AlzPost(Post):
         self.user_num_posts = user_num_posts
         self.post_id = self.extractPostID(url)
         self.url = url
-        
-        self.database = MongoDB()
         
     def extractPostID(self, url: str):
         """Extract the post_id from the url.
@@ -70,6 +70,6 @@ class AlzPost(Post):
     def writeToDatabase(self):
         """ Write the post to the database
         """
-        collection = self.database.db["AlzConnected"]
+        collection = database.db["AlzConnected"]
         collection.insert_one(self.toJSON())
         
