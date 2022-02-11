@@ -13,6 +13,7 @@ class AlsSpider(scrapy.Spider):
     name = "als"
     start_page = 2 # First page to scrape
     end_page = 223 # Last page to scrape
+    write_to_database = True # If the posts should be written to the database or not
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -165,6 +166,8 @@ class AlsSpider(scrapy.Spider):
                 reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
                 post = AlsPost(post_id, dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
                                 user_diagnosis[i], user_country[i], user_state[i], user_city[i], response.request.url.rstrip("#ekbottomfooter"))
+                if self.write_to_database:
+                    post.writeToDatabase()
                 yield post.toJSON()    
         
         # Follow links to reply pages

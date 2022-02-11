@@ -72,5 +72,5 @@ class AlzPost(Post):
         """
         collection = database.db["AlzConnected"]
         update = {"$set": self.toJSON()} # it is important to use $set in your update
-        collection.update(self.toJSON(), update, upsert=True)   
+        collection.update(self.toJSON(), update, upsert=True)
         
