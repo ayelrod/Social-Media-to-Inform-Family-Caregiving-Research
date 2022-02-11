@@ -52,14 +52,20 @@ class AlzPost(Post):
             [dict]: The post in JSON form, represented by a Python dictionary
         """
         return {
-            "date" : self.date.strftime("%Y-%m-%d %H:%M:%S"),
+            "post_id" : self.post_id,
+            "date" : self.date,
             "title" : self.title,
             "body" : self.body,
             "reply" : self.reply,
             "user_name" : self.user_name,
-            "user_date_joined" : self.user_date_joined.strftime("%Y-%m-%d"),
+            "user_date_joined" : self.user_date_joined,
             "user_num_posts" : self.user_num_posts,
-            "post_id" : self.post_id,
             "url" : self.url
         }
+        
+    def writeToDatabase(self):
+        """ Write the post to the database
+        """
+        # TODO: Write post to database
+        pass
         

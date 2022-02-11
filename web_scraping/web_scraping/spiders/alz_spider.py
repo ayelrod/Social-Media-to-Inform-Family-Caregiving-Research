@@ -13,6 +13,7 @@ class AlzSpider(scrapy.Spider):
     name = "alz"
     start_page = 1 # First page to scrape
     end_page = 300 # Last page to scrape
+    visited = set() # URLs that have been visited
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -44,6 +45,9 @@ class AlzSpider(scrapy.Spider):
             user_names = []
             user_dates = []
             user_num_posts = []
+            
+            # Add URL to visited set
+            self.visited.add(response.request.url)
             
             # Get title of posts
             title = ""
@@ -134,6 +138,8 @@ class AlzSpider(scrapy.Spider):
         return body.extract()
     
     def hasBeenVisited(self, url):
-        # TODO: Query database to see if the url exists
+        if url in self.visited:
+            return True
+        # TODO: Query database to see if url has been visited
         return False
         

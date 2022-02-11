@@ -9,10 +9,8 @@ class Post(ABC):
     @abstractmethod
     def toJSON(self):
         pass
-        
+      
+    @abstractmethod  
     def writeToDatabase(self):
-        """ Write the post to the database
-        """
-        # TODO: Write post to database
         pass
     
