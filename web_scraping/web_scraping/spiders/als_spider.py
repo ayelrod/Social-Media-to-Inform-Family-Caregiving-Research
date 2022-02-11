@@ -13,7 +13,7 @@ class AlsSpider(scrapy.Spider):
     name = "als"
     start_page = 2 # First page to scrape
     end_page = 223 # Last page to scrape
-    write_to_database = True # If the posts should be written to the database or not
+    write_to_database = False # If the posts should be written to the database or not
     
     def start_requests(self):
         """ Starts the web scraping for each
