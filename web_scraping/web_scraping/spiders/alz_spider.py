@@ -14,6 +14,7 @@ class AlzSpider(scrapy.Spider):
     start_page = 1 # First page to scrape
     end_page = 300 # Last page to scrape
     write_to_database = False # If the posts should be written to the database or not
+    collection_name = "AlzConnected" # Name of the collection in MongoDB
 
     
     def start_requests(self):
@@ -85,7 +86,7 @@ class AlzSpider(scrapy.Spider):
                 reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
                 post = AlzPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url)
                 if self.write_to_database:
-                    post.writeToDatabase()
+                    post.writeToDatabase(self.collection_name)
                 yield post.toJSON()    
         
         # Follow link to next reply page

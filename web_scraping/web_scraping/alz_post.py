@@ -67,10 +67,10 @@ class AlzPost(Post):
             "url" : self.url
         }
         
-    def writeToDatabase(self):
+    def writeToDatabase(self, collection_name):
         """ Write the post to the database
         """
-        collection = database.db["AlzConnected"]
+        collection = database.db[collection_name]
         if len(list(collection.find(self.toJSON())))== 0:
             collection.insert_one(self.toJSON())
         

@@ -14,6 +14,7 @@ class AlsPastCaregiverSpider(scrapy.Spider):
     start_page = 2 # First page to scrape
     end_page = 23 # Last page to scrape
     write_to_database = False # If the posts should be written to the database or not
+    collection_name = "AlsPastForums" # Name of the collection in MongoDB
     
     def start_requests(self):
         """ Starts the web scraping for each
@@ -167,7 +168,7 @@ class AlsPastCaregiverSpider(scrapy.Spider):
                 post = AlsPost(post_id, dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
                                 user_diagnosis[i], user_country[i], user_state[i], user_city[i], response.request.url.rstrip("#ekbottomfooter"))
                 if self.write_to_database:
-                    post.writeToDatabase("AlsPastForums")
+                    post.writeToDatabase(self.collection_name)
                 yield post.toJSON()    
         
         # Follow links to reply pages
