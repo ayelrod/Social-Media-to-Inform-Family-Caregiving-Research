@@ -75,6 +75,6 @@ class AlsPost(Post):
         """ Write the post to the database
         """
         collection = database.db[collection_name]
-        if collection.find(self.toJSON(), {}).count() == 0:
+        if len(list(collection.find(self.toJSON()))) == 0:
             collection.insert_one(self.toJSON())
         
