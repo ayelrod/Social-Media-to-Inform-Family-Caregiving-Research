@@ -167,7 +167,7 @@ class AlsSpider(scrapy.Spider):
                 post = AlsPost(post_id, dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], user_reason_joined[i], 
                                 user_diagnosis[i], user_country[i], user_state[i], user_city[i], response.request.url.rstrip("#ekbottomfooter"))
                 if self.write_to_database:
-                    post.writeToDatabase()
+                    post.writeToDatabase("AlsForums")
                 yield post.toJSON()    
         
         # Follow links to reply pages

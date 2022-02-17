@@ -69,12 +69,12 @@ class AlsPost(Post):
             "url" : self.url
         }
         
-    def writeToDatabase(self):
+    def writeToDatabase(self, collection_name):
         """ Write the post to the database
         """
         """ Write the post to the database
         """
-        collection = database.db["AlsForums"]
-        update = {"$set": self.toJSON()} # it is important to use $set in your update
-        collection.update(self.toJSON(), update, upsert=True)
+        collection = database.db[collection_name]
+        if collection.find(self.toJSON(), {}).count() == 0:
+            collection.insert_one(self.toJSON())
         
