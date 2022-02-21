@@ -16,7 +16,8 @@ pip install pymongo
 pip install dnspython
 ```
 ### Running Scrapers
-The credentials for the database to write to need to be added to the program before running. These credentials will be in the form of a MongoDB Connection String. Once the connection string is obtained, paste it into a file called '''credentials.txt''' and insert it into the ./web_scrapers/web_scrapers directory.
+The scraped data is written to a MonogoDB database as it is scraped. The credentials for this database need to be provided to the program before running. These credentials will be in the form of a MongoDB Connection String. 
+Once the connection string is obtained, paste it into a file called '''credentials.txt''' and insert it into the ./web_scrapers/web_scrapers directory.
 
 Once the credentials are inserted, change into the correct directory and run scrapy:
 ```
@@ -33,11 +34,21 @@ scrapy crawl <spider_name> -O <output_file_name>
 to write the output to a file.
 
 Possible values of <spider_name>
-- *alz* for this forum: https://www.alzconnected.org/discussion.aspx?g=topics&f=151
-- *als* for this forum: https://www.alsforums.com/community/forums/current-caregivers.59/
-- *als_past_caregivers* for this forum: https://www.alsforums.com/community/forums/past-caregivers.60/
+- **alz** for this forum: https://www.alzconnected.org/discussion.aspx?g=topics&f=151
+- **als** for this forum: https://www.alsforums.com/community/forums/current-caregivers.59/
+- **als_past_caregivers** for this forum: https://www.alsforums.com/community/forums/past-caregivers.60/
 
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
+
+### Options
+There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
+- **name**: This is the name of the spider, do not change it
+- **start_page**: The first page of the forum to scrape
+- **end_page**: The last page of the forum to scrape
+- **write_to_database**: If True, the data is written to the database. If False, the data is not written to the database.
+- **collection_name**: The name of the MongoDB collection to send the data to. *This needs to be configured to match your database information*
+
+There is also a line that should be changed in ./web_scraping/web_scraping/mongoDB.py that should be changed if you are using your own database. The last line should be changed to include your MongoDB database's name.
 
 ## Data
 ### AlzConnected Data
