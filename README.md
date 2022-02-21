@@ -62,7 +62,7 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 - *user_num_posts*: the number of posts the user has made on the site
 - *url*: the URL to the post
 
-### AlsForums
+### AlsForums Data
 - *post_id*: the post_id is a field that can be used to link posts to eachother. All posts within the same thread have the same post_id. 
 - *date*: the date and time of the post (between 05/17/2003 - 02/16/2022)
 - *title*: the title of the post
