@@ -6,17 +6,13 @@
 ## Install and Run Web Scrapers
 ### Requirements
 These packages need to be installed before running the web scrapers:
-- scrapy
-```
-pip install scrapy
-```
+- Scrapy
 - pymongo
-```
-pip install pymongo
-```
 - dnspython
 ```
+pip install scrapy
 pip install dnspython
+pip install pymongo
 ```
 ### Running Scrapers
 The scraped data is written to a MonogoDB database as it is scraped. The credentials for this database need to be provided to the program before running. These credentials will be in the form of a MongoDB Connection String. 
@@ -80,3 +76,19 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 - *user_state*: the user's home state | CAN BE EMPTY
 - *user_city*: the user's home city | CAN BE EMPTY
 - *url*: the URL to the post
+
+## NLP
+### Pre-Processing and Tokenization
+In order to perform NLP on the text data, we first need to clean it and tokenize it. To do this, we use a few functions from NLTK (Natural Language Toolkit). NLTK's word_tokenize was used to split the text into a list of words. Punctuations and stopwords are then removed and we are left with our words of interest. The words are then lemmatized by stripping words down to their base using NLTK's lemmatizer. An example of this would be stripping the word "being" to "be" to get its most basic form. This leaves us with our tokens in the form of a list of words, which are used to represent each post. 
+
+In Sentiment Analysis, further processing is needed to turn these lists of words into features. The first step in doing this is to find the frequency of each word in all the posts of interest combined. Then we take the 2000 most frequent words and those become our features. A post is then represented by a Python dictionary which maps each feature to a boolean value of wether or not that feature is contained in the document.    
+  
+  
+### Topic Modeling
+Topic Modeling is done using a process called LDA (Latent Dirichlet Allocation), provided in the gensim and pyLDAvis libraries. LDA outputs a specified number of topics with words that are most likely to belong to those topics.  
+  
+  
+### Sentiment Analysis
+Sentiment Analysis was done using NLTK's SentimentIntensityAnalyzer and NaiveBayesClassifier. The first step was to mark each post as positive or negative. We did this by using Textblob to get the polarity of text, which is a value from [-1, 1] with -1 being the most negative and 1 being the most positive. Neutral posts (value of 0) are marked as Negative during the sentiment analysis. We also got the subjectivity of each post, which is a value from [0, 1] with 0 being the most objective and 1 being the most subjective. Labeling posts as positive or negative is done using VADER (Valence Aware Dictionary for Sentiment Reasoning). This model takes into account the general sentiment of a post (polarity) and the intensity of emotion. The model can also understand context at a basic level when analyzing words.
+
+Once that was done, we could use NLTK's Naive Bayes Classifier to get a better sense of which words are linked to negative and positive sentiments. This output shows us how much more likely a word is to be associated with either a negative or positive sentiment.
