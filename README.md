@@ -79,7 +79,7 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 
 ## NLP
 ### Pre-Processing and Tokenization
-In order to perform NLP on the text data, we first need to clean it and tokenize it. To do this, we use a few functions from NLTK (Natural Language Toolkit). NLTK's word_tokenize was used to split the text into a list of words. Punctuations and stopwords are then removed and we are left with our words of interest. The words are then lemmatized by stripping words down to their base using NLTK's lemmatizer. An example of this would be stripping the word "being" to "be" to get its most basic form. This leaves us with our tokens in the form of a list of words, which are used to represent each post. 
+In order to perform NLP on the text data, we first need to clean it and tokenize it. First, we split the text into a list of words. Punctuations and stopwords are then removed and we are left with our words of interest. The words are then lemmatized by stripping words down to their base. An example of this would be stripping the word "being" to "be" to get its most basic form. This leaves us with our tokens in the form of a list of words, which are used to represent each post. 
 
 In Sentiment Analysis, further processing is needed to turn these lists of words into features. The first step in doing this is to find the frequency of each word in all the posts of interest combined. Then we take the 2000 most frequent words and those become our features. A post is then represented by a Python dictionary which maps each feature to a boolean value of wether or not that feature is contained in the document.    
   
