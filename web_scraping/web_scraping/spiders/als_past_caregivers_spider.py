@@ -13,7 +13,7 @@ class AlsPastCaregiverSpider(scrapy.Spider):
     name = "als_past_caregivers"
     start_page = 2 # First page to scrape
     end_page = 23 # Last page to scrape
-    write_to_database = False # If the posts should be written to the database or not
+    write_to_database = True # If the posts should be written to the database or not
     collection_name = "AlsForums-PastCaregivers" # Name of the collection in MongoDB
     
     def start_requests(self):
