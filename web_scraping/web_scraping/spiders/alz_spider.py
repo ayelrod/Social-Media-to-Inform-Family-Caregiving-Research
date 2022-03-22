@@ -11,9 +11,9 @@ class AlzSpider(scrapy.Spider):
         of pages to scrape.
     """
     name = "alz"
-    start_page = 101 # First page to scrape
-    end_page = 200 # Last page to scrape
-    write_to_database = True # If the posts should be written to the database or not
+    start_page = 1 # First page to scrape
+    end_page = 300 # Last page to scrape
+    write_to_database = False # If the posts should be written to the database or not
     collection_name = "AlzConnected" # Name of the collection in MongoDB
 
     
