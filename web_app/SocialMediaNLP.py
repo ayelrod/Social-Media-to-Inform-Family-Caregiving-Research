@@ -18,6 +18,6 @@ def als_current():
 def als_past():
     return render_template('als-past.html')
 
-@app.route('/nlp')
-def nlp():
-    return render_template('nlp.html')
+@app.route('/team')
+def team():
+    return render_template('team.html')
