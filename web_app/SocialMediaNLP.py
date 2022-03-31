@@ -21,3 +21,7 @@ def als_past():
 @app.route('/team')
 def team():
     return render_template('team.html')
+
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html')
