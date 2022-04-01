@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
     <h1 style="text-align:center">{% block title %} AlzConnected {% endblock %}</h1>
     <h5 style="text-align:center">An NLP analysis of <a href="https://www.alzconnected.org/discussion.aspx?g=topics&f=151">alzconnected.org</a></h5>
-    <body>
+</head>
+
+<body>
     <h2><u>About</u></h2>
     <text>
         <font size="3">
@@ -16,6 +19,7 @@
     </text>
     </br></br>
     <h3><u>Topic Modeling:</u></h3>
+    <div class="topic-modeling">
     <h5 style="text-align:center">Pre-Covid</h5>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bmabey/pyLDAvis@3.3.1/pyLDAvis/js/ldavis.v1.0.0.css">
 
@@ -57,6 +61,8 @@
              });
     }
     </script>
+    </div>
+    <div class="topic-modeling">
     <h5 style="text-align:center">Post-Covid</h5>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bmabey/pyLDAvis@3.3.1/pyLDAvis/js/ldavis.v1.0.0.css">
 
@@ -98,7 +104,7 @@
             });
     }
     </script>
-
+    </div>
     <h3><u>Sentiment Analysis:</u></h3>
     <h5 style="text-align:center">Pre-Covid</h5>
     <img src="{{url_for('static', filename='images/Alz_SA_PreCovid.png')}}" style="width:1200px;height:450px;">
