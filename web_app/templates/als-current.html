@@ -10,19 +10,18 @@
     <text>
         <font size="3">
         ALS Forums is an online forum where caregivers of patients with Amyotrophic Lateral Sclerosis (ALS) as well as patients
-        post to give information, ask questions, and seek support. </br>
+        post to give information, ask questions, and seek support. This page contains an NLP analysis of the Current Caregivers Forum, used by caregivers who are currently caring for a patient with ALS. </br>
         *Put link to download data set* </br>
         </br>
-        We performed natural language processing (NLP) on the data we gathered, including topic modeling and sentiment analysis.</br>
+        We performed natural language processing (NLP) on the data we gathered, including topic modeling and sentiment analysis. This analysis was primarily conducted on posts containing the keywords "tele", "video", "virtual", "zoom", "skype", "phone". We separated the data into "Pre-Covid" (March 1, 2018 - February 29, 2020) and "Covid" (March 1, 2020 onwards). Further documentation can be found on the Documentation page.</br>
         </br>
         </font>
     </text>
 
     <h3><u>Topic Modeling:</u></h3>
-    <text><font size="3">This NLP was performed on the posts containing the keywords ["tele", "video", "virtual", "zoom", "skype", "phone"]</br></font></text>
 </br>
 <div class="topic-modeling">
-    <h4 style="text-align:center">Pre-Covid (March 1, 2018 - February 29, 2020)</h4>
+    <h4 style="text-align:center">Pre-Covid </h4>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bmabey/pyLDAvis@3.3.1/pyLDAvis/js/ldavis.v1.0.0.css">
 
@@ -66,7 +65,7 @@
     </script>
 </div>
 <div class="topic-modeling">
-    <h4 style="text-align:center">Covid (March 1, 2020 - )</h4>
+    <h4 style="text-align:center">Covid </h4>
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bmabey/pyLDAvis@3.3.1/pyLDAvis/js/ldavis.v1.0.0.css">
@@ -110,5 +109,12 @@
     }
     </script>
     </div>
+    <h3><u>Sentiment Analysis:</u></h3>
+    <h5 style="text-align:center">Pre-Covid</h5>
+    <img src="{{url_for('static', filename='images/current_pre.png')}}" style="width:1200px;height:450px;">
+    
+    <h5 style="text-align:center">Post-Covid</h5>
+    <img src="{{url_for('static', filename='images/current_post.png')}}" style="width:1200px;height:450px;">
+
 </body>
 {% endblock %}
