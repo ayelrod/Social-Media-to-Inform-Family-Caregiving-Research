@@ -11,39 +11,42 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
+    <div class="page-header">
+        <h2>Social Media to Inform Family Caregiving Research</h2>
+    </div>
     <nav class="navbar navbar-expand-md navbar-light" id="navbarN" style="background-color: #abc9d2;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarN">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarN">
+        <div class="collapse navbar-collapse" >
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('index')}}" >Home</a>
+                <a class="nav-link" id="home" href="{{ url_for('index')}}" >Home</a>
             </li>
             </ul>
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="team">Team</a>
+                <a class="nav-link" id="team" href="team">Team</a>
             </li>
             </ul>
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="documentation">Documentation</a>
+                <a class="nav-link" id="doc" href="documentation">Documentation</a>
             </li>
             </ul>
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="alz">AlzConnected</a>
+                <a class="nav-link" id="alz" href="alz">AlzConnected</a>
             </li>
             </ul>
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="als-current">AlsForums Current Caregivers</a>
+                <a class="nav-link" id="alscurrent" href="als-current">AlsForums Current Caregivers</a>
             </li>
             </ul>
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="als-past">AlsForums Past Caregivers</a>
+                <a class="nav-link" id="alspast" href="als-past">AlsForums Past Caregivers</a>
             </li>
             </ul>
             

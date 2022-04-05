@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 style="text-align:center">{% block title %} Social Media To Inform Family Caregiving Research {% endblock %}</h1>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/index.css') }}">
+        <div class="section-header">
+            <h3>About</h3>
+        </div>
+    </head>
     <body>
-        <h2>About</h2>
-        <text>In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offers the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for zero or low cost compared to traditional community-engagement methods such as interviews and focus groups. We have created a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data was collected by web-scraping posts and replies from online forums and storing it in a database. This was followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We also scraped data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, the data was used to help answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collected is adaptable and has been made public to create opportunities for collaboration in answering future research questions.</text>
+        <p>In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offers the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for zero or low cost compared to traditional community-engagement methods such as interviews and focus groups. </p>
+        <p>We have created a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data was collected by web-scraping posts and replies from online forums and storing it in a database. This was followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We also scraped data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, the data was used to help answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collected is adaptable and has been made public to create opportunities for collaboration in answering future research questions.</p>
     </body>
 {% endblock %}
