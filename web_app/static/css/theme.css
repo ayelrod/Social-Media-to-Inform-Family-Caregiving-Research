@@ -1,0 +1,12 @@
+h1 {
+    font-size: 50px;
+}
+
+#navbarN {
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    height: 150px;
+    font-size: 20px;
+    font-family: ;
+}

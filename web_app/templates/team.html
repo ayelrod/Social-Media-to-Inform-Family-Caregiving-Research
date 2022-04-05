@@ -1,26 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 style="text-align:center">{% block title %} Team {% endblock %}</h1>
+    <head>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/team_layout.css') }}">
+    </head>
+    
     <body>
-    <h4>Developers</h4>
-    <p>
-    Lucas Rodriguez</br>  
-    <img src="{{url_for('static', filename='images/lucas.jpg')}}" style="width:200px;height:200px;" >   
-    </br>Shivani Parekh</br>
-    <img src="{{url_for('static', filename='images/shivani.jpg')}}" style="width:200px;height:200px;" > 
-    </br>Urmi Lalchandani</br>
-    <img src="{{url_for('static', filename='images/urmi.jpeg')}}" style="width:200px;height:200px;" > 
-    </br>Gem Gasca</br>
-    <img src="{{url_for('static', filename='images/gem.jpg')}}" style="width:200px;height:200px;" >   
-    </p>
+    <main>
+    <h1 style="text-align:left"> Team </h1>
+    <h4 style="text-align:left">Our Developers</h4>
     </br>
-    <h4>Research Team</h4>
-    <p>
-    Dr. Yong Choi </br>
-    Jiyeong Kim </br>
-    Salhah Alomairi </br>
-    </p>
+    <div class="team">
+        <div class="profile">
+            <p>Lucas Rodriguez </p>
+            <img src="{{url_for('static', filename='images/lucas-circle.png')}}" style="width:200px;height:200px;" >   
+        </div>
+        <div class="profile">
+            <p>Shivani Parekh</p>
+            <img src="{{url_for('static', filename='images/shivani-circle.png')}}" style="width:200px;height:200px;" > 
+        </div>
+        <div class="profile">
+            <p>Urmi Lalchandani</p>
+            <img src="{{url_for('static', filename='images/urmi-circle.png')}}" style="width:200px;height:200px;" > 
+        </div>
+        <div class="profile">
+            <p>Gem Gasca</p>
+            <img src="{{url_for('static', filename='images/gem-circle.png')}}" style="width:200px;height:200px;" >   
+        </div>
+    </div>
+    </br>
+    <h4>Our Researchers</h4>
+    <div class="team">
+        <div class="profile">
+            <p>Dr. Yong Choi </p>
+        </div>
+        <div class="profile">
+            <p>Jiyeong Kim</p>
+        </div>
+        <div class="profile">
+            <p>Salhah Alomairi</p>
+        </div>
+    </div>
+    </main>
     </body>
 {% endblock %}
 static/css/images
