@@ -36,6 +36,7 @@ Possible values of <spider_name>
 - **alz** for this forum: https://www.alzconnected.org/discussion.aspx?g=topics&f=151
 - **als** for this forum: https://www.alsforums.com/community/forums/current-caregivers.59/
 - **als_past_caregivers** for this forum: https://www.alsforums.com/community/forums/past-caregivers.60/
+- **ac** for this forum: https://www.agingcare.com/caregiver-forum/questions
 
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
 
@@ -75,6 +76,16 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 - *user_country*: the user's home country | CAN BE EMPTY
 - *user_state*: the user's home state | CAN BE EMPTY
 - *user_city*: the user's home city | CAN BE EMPTY
+- *url*: the URL to the post
+
+### AgingCare Data
+- *post_id*: the post_id is a field that can be used to link posts to eachother. All posts within the same thread have the same post_id. 
+- *title*: the title of the post
+- *body*: the body of the post
+- *date*: the date and time of the post (between 10/18/2007 - 04/06/2022)
+- *user_name*: the username of the post author
+- *reply*: True if the post is a reply, False if the post is the original post in the thread
+- *keywords*: the keywords selected for main post by user
 - *url*: the URL to the post
 
 ## NLP
