@@ -40,8 +40,7 @@ class ACSpider(scrapy.Spider):
         # Get bodies of posts:
         posts = []   
         body = response.css('section.Content p').getall() # gets original post
-        self.concatBody(body)
-        posts.append(body)
+        posts.append(self.concatBody(body))
 
         replies = response.css('div.comments-page div.commentheader div.pad-btm-m div.text').getall()  # gets replies
         for reply in replies:
@@ -65,7 +64,8 @@ class ACSpider(scrapy.Spider):
 
         # Yield Posts
         url = response.request.url
-        post_id = url[len(url)-10: len(url)-4]
+        #post_id = url[len(url)-10: len(url)-4]
+        post_id = self.extractPostID(url)
         if len(dates) == len(posts):
             for i in range(len(dates)):
                 # If the post is not the first one in the list, it is an reply
@@ -73,24 +73,54 @@ class ACSpider(scrapy.Spider):
                 reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
                 if posts[i] == 'Assisted Living':
                     continue
-                post = ACPost(post_id,dates[i], title, posts[i], reply, user_names[i], post_keywords[i], url)
+                if post_id == 'forum/':
+                    continue
+                post = ACPost(post_id, dates[i], title, posts[i], reply, user_names[i], post_keywords[i], url)
                 if self.write_to_database:
                     post.writeToDatabase(self.collection_name)
                 yield post.toJSON()
 
-        # Follow links to reply pages
-        # if response.css('div.threadBlock div.comments-page a.text::attr(href)').get() is not None:  # follow "See All Pages Link" if it exists
-        #     a = response.css('div.threadBlock div.comments-page a.text::attr(href)')        
-        #     yield response.follow(a, callback=self.parse)
-
-        # Follow links to post
+        # follows links to replies
         allLinks = response.css('div.forumList div.forumEntry a::attr(href)').getall()
         for link in allLinks:
             if link.startswith('/discussions/'):
                 yield response.follow(link, callback=self.parse)
         
-        for a in response.css(response.css('div.pagination-container div.pagination-button a::attr(href)').getall()[2]):
-            yield response.follow(a, callback=self.parse)
+        # follow links to pages within reply
+        if response.css('div.pagination-container div.pagination-button a::attr(href)').get() is not None:
+            link = response.css('div.pagination-container div.pagination-button a::attr(href)').get()
+            for a in link:
+                yield response.follow(link, callback=self.parse)
+
+        # follows links to pages
+        allLinks = response.css('div.pagination-container div.pagination-button a::attr(href)').getall()
+        for l in allLinks:
+            if l.startswith('/caregiver-forum/discussions?page='):
+                for a in l:
+                    yield response.follow(a, callback=self.parse)
+                break
+
+        # ['/caregiver-forum/discussions?page=2',
+        # '/caregiver-forum/discussions?page=501']
+
+        #['/caregiver-forum/discussions',
+        # '/caregiver-forum/discussions',
+        # '/caregiver-forum/discussions?page=3',
+        # '/caregiver-forum/discussions?page=501']
+
+        # ['/caregiver-forum/discussions',
+        # '/caregiver-forum/discussions?page=2',
+        # '/caregiver-forum/discussions?page=4',
+        # '/caregiver-forum/discussions?page=501']
+
+    def extractPostID(self, url: str):
+        last = 0
+        pos = 0
+        for i in url:
+            if i == '-':
+                last = pos
+            pos += 1
+        return url[last+1:last+7]
 
     def concatBody(self, body: list):
         text = ""
