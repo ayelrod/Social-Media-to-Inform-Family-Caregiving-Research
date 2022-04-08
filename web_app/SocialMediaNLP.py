@@ -25,3 +25,7 @@ def team():
 @app.route('/documentation')
 def documentation():
     return render_template('documentation.html')
+
+@app.route('/questions')
+def questions():
+    return render_template('questions.html')

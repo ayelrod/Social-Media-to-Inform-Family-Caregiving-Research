@@ -3,6 +3,7 @@
 body {
     margin:0;
     font-family: Inter;
+    font-weight: 400;
 }
 .section-header {
     margin-top: 50px;
