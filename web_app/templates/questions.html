@@ -2,6 +2,7 @@
 
 {% block content %}
     <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/question.css') }}">
         <div class="section-header">
             <h3>Ask a Question</h3>
         </div>
@@ -17,6 +18,8 @@
         <input type="text" name="first-name"
                placeholder="First Name"
                value="{{ request.form['first-name'] }}"></input>
+        <br>
+
         <br>
         <label for="last-name">Last Name</label>
         <br>
@@ -50,6 +53,7 @@
                   cols="60"
                   >{{ request.form['question'] }}</textarea>
         <br>
+
         <button type="submit">Submit</button>
     </form>
 {% endblock %}

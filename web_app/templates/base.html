@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/theme.css') }}">
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/dropdown.css') }}">
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
@@ -32,9 +33,25 @@
             <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" id="doc" href="documentation">Documentation</a>
+
+            <!-- gem -->
             </li>
             </ul>
             <ul class="navbar-nav">
+            <li class="nav-item active">
+                <div class="dropdown" id="dropdown">
+                    <button class="dropbtn">Research Forums</button>
+                    <div class="dropdown-content">
+                        <a href="/alz">AlzConnected</a>
+                        <a href="/als-current">AlsForums Current Caregivers</a>
+                        <a href="/als-past">AlsForums Past Caregivers</a>
+                    </div>
+                </div>
+            <!-- added -->
+            
+            </li>
+            </ul>
+            <!-- <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" id="alz" href="alz">AlzConnected</a>
             </li>
@@ -48,7 +65,8 @@
             <li class="nav-item active">
                 <a class="nav-link" id="alspast" href="als-past">AlsForums Past Caregivers</a>
             </li>
-            </ul>
+            </ul> -->
+
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <a class="nav-link" id="questions" href="{{ url_for('questions')}}">Questions</a>
