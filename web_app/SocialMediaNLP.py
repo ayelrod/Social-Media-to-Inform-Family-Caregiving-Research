@@ -7,9 +7,9 @@ app.config['SECRET_KEY'] = open('credentials.txt', 'r').readline()
 def index():
     return render_template('index.html')
 
-@app.route('/dropdown')
-def dropdown():
-    return render_template('dropdown.html')
+# @app.route('/dropdown')
+# def dropdown():
+#     return render_template('dropdown.html')
 
 @app.route('/alz')
 def alz():

@@ -1,0 +1,17 @@
+#questions {
+    font-weight: 700;
+    color:#4974a5;
+}
+
+button[type=submit]{
+    background-color: #4974a5;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
