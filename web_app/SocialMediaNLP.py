@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, flash, redirect, session
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = open('credentials.txt', 'r').readline()
 
 @app.route('/')
 def index():
@@ -26,6 +27,28 @@ def team():
 def documentation():
     return render_template('documentation.html')
 
-@app.route('/questions')
+@app.route('/questions', methods=(['GET', 'POST']))
 def questions():
+    if request.method == 'POST':
+        firstName = request.form['first-name']
+        lastName = request.form['last-name']
+        email = request.form['email']
+        affiliation = request.form['affiliation']
+        question = request.form['question']
+        
+        session.pop('logged_in', None)
+
+        if not firstName:
+            flash('First Name is required!')
+        elif not lastName:
+            flash('Last Name is required!')
+        elif not email:
+            flash('Email is required!')
+        elif not affiliation:
+            flash('Affiliation is required!')
+        elif not question:
+            flash('Question is required!')  
+        else:
+            return redirect(url_for('questions'))
+    
     return render_template('questions.html')
