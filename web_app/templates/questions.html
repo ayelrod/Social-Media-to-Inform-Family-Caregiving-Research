@@ -13,40 +13,41 @@
     {% endfor %}
 
     <form method="post">
-        <label for="first-name">First Name</label>
-        <br>
+    <ul>
+        <label for="first-name">First Name:  </label>
+        <!-- <br> -->
         <input type="text" name="first-name"
                placeholder="First Name"
                value="{{ request.form['first-name'] }}"></input>
         <br>
 
         <br>
-        <label for="last-name">Last Name</label>
-        <br>
+        <label for="last-name">Last Name:  </label>
+        <!-- <br> -->
         <input type="text" name="last-name"
                placeholder="Last Name"
                value="{{ request.form['last-name'] }}"></input>
         <br>
 
         <br>
-        <label for="email">Email</label>
-        <br>
+        <label for="email">Email:  </label>
+        <!-- <br> -->
         <input type="email" name="email"
                placeholder="Email"
                value="{{ request.form['email'] }}"></input>
         <br>
 
         <br>
-        <label for="affiliation">Affiliation</label>
-        <br>
+        <label for="affiliation">Affiliation:  </label>
+        <!-- <br> -->
         <input type="text" name="affiliation"
                placeholder="Affiliation"
                value="{{ request.form['affiliation'] }}"></input>
         <br>
 
         <br>
-        <label for="question">Question</label>
-        <br>
+        <label for="question">Question:  </label>
+        <!-- <br> -->
         <textarea name="question"
                   placeholder="Question"
                   rows="15"
@@ -55,5 +56,6 @@
         <br>
 
         <button type="submit">Submit</button>
+    </ul>
     </form>
 {% endblock %}
