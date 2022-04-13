@@ -5,10 +5,10 @@ pip install dnspython
 pip install pymongo
 cd ./web_scraping/web_scraping
 
-scrapy crawl als_past_caregivers
+scrapy crawl als_past_caregivers & sleep 300 ; kill $!
 
-scrapy crawl als
+scrapy crawl als & sleep 300 ; kill $!
 
-scrapy crawl alz
+scrapy crawl alz & sleep 300 ; kill $!
 
 # scrapy crawl ac
