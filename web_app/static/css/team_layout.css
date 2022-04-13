@@ -8,7 +8,11 @@
     margin-bottom: 30px;
     font-size: 30px;
 }
+h3.section-header {
+    padding-left: 10px;
+    padding-left: 50x;
 
+}
 .team {
     display: flex;
     flex-direction: row;
