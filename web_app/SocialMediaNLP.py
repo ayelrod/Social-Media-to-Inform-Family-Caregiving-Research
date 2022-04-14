@@ -23,9 +23,9 @@ def als_current():
 def als_past():
     return render_template('als-past.html')
 
-@app.route('/team')
-def team():
-    return render_template('team.html')
+# @app.route('/team')
+# def team():
+#     return render_template('team.html')
 
 @app.route('/documentation')
 def documentation():
