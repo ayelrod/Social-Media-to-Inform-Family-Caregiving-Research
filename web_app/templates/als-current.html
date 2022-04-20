@@ -18,7 +18,17 @@
         <p>We performed natural language processing (NLP) on the data we gathered, including topic modeling and sentiment analysis. This analysis was primarily conducted on posts containing the keywords "tele", "video", "virtual", "zoom", "skype", "phone". We separated the data into "Pre-Covid" (March 1, 2018 - February 29, 2020) and "Covid" (March 1, 2020 onwards). Further documentation can be found on the Documentation page.</p></br>
         </br>
     </div>
+    <h5>Statistics:</h4> 
+    <div class="descriptive_stats">
+        <img src="{{url_for('static', filename='images/current_choropleth.png')}}"  alt="Map of US describing number of users per state">
+        <p style="text-align: center;">The above heatmap of the United States describes the demographics of the users of the ALS Current Caregiver Forum.</p>
+        
+        <br>
+        <img class="barchart" src="{{url_for('static', filename='images/current_reasonforjoining.png')}}"  alt="Bar chart describing user reasons for joining the forum" >
+        <p style="text-align: center;">The above bar chart depicts the most popular reasons forum users stated for joining the forum.</p>
 
+
+    </div>
     <div class="section-header">
         <h3>Topic Modeling</h3>
     </div>
