@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request, url_for, flash, redirect, session
+import smtplib 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = open('credentials.txt', 'r').readline()
+credentials = open('credentials.txt', 'r')
+app.config['SECRET_KEY'] = credentials.readline()
+email_password = credentials.readline()
 
 @app.route('/')
 def index():
@@ -53,6 +58,28 @@ def questions():
         elif not question:
             flash('Question is required!')  
         else:
+            port_number = 587
+            msg = MIMEMultipart()
+            msg['From'] = 'socialmediafamilycaregivingresearch@gmx.com'
+            msg['To'] = 'socialmediafamilycaregivingresearch@gmx.com'
+            msg['Subject'] = 'SocialMediaFamilyCaregivingResearch Question'
+            message = 'First Name: ' + firstName + '\n' +\
+                'Last Name: ' + lastName + '\n' +\
+                'Email: ' + email + '\n' +\
+                'Affiliation: ' + affiliation + '\n' +\
+                'Question: ' + question
+            msg.attach(MIMEText(message))
+            try:
+                mailserver = smtplib.SMTP('smtp.gmx.com',port_number)
+                mailserver.ehlo()
+                mailserver.starttls()
+                mailserver.login("socialmediafamilycaregivingresearch@gmx.com", email_password)
+                mailserver.sendmail('socialmediafamilycaregivingresearch@gmx.com','socialmediafamilycaregivingresearch@gmx.com',msg.as_string())
+                mailserver.quit()
+                flash("Question submitted successfully!")
+            except:
+                flash("Message failed to send!")
+            
             return redirect(url_for('questions'))
     
     return render_template('questions.html')
