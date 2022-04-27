@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ac-questions.css') }}">
+    <h3 style="text-align:center">An NLP analysis of <a href="https://www.agingcare.com/caregiver-forum/questions" style="color:#abc9d2;">AgingCare Questions Forum</a></h3>
+</head>
+
+<body>
+    <div class="section-header">
+        <h3>About</h3>
+    </div>
+    <div class="about">
+        <p>
+        AgingCare (agingcare.com) is _</p>
+        <p>We have scraped these posts from the website with posts dating back to 2008, the start of the message board. You can download the data set here.</p>
+
+        <p>Description</p>
+   </div>
+
+</body>
+{% endblock %}
