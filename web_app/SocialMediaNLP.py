@@ -28,6 +28,10 @@ def als_current():
 def als_past():
     return render_template('als-past.html')
 
+@app.route('/ac-questions')
+def ac_questions():
+    return render_template('ac-questions.html')
+
 # @app.route('/team')
 # def team():
 #     return render_template('team.html')
