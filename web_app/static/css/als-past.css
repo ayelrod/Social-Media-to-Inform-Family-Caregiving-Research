@@ -1,3 +1,8 @@
+body {
+    margin-bottom: 100px;
+    font-size: 18px;
+}
+
 #alspast {
     font-weight: 700;
     color:#4974a5;
@@ -20,6 +25,7 @@ img {
     margin-left: auto;
     margin-right: auto;
     width:500px;
+    margin-bottom: 20px;
 }
 
 #links {
@@ -35,6 +41,7 @@ img {
     width: 100px;
     background-color: #d9d9d9;
     border-radius: 50%;
+    border: 2px solid #abc9d2;
     display: inline-block;
     margin: 10px;
     text-align: center;
@@ -43,4 +50,16 @@ img {
     justify-content: center;
     font-weight: 900;
     color:#79a9b7;
+}
+
+.emotionanalysis-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+}
+
+#timeseries {
+    width: 100%;
+    margin-bottom: 20px;
 }
