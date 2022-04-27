@@ -36,6 +36,14 @@ def als_past():
 def documentation():
     return render_template('documentation.html')
 
+@app.route('/pastchoropleth')
+def pastchoropleth():
+    return render_template('pastchoropleth.html')
+
+@app.route('/currentchoropleth')
+def currentchoropleth():
+    return render_template('currentchoropleth.html')
+
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():
     if request.method == 'POST':
