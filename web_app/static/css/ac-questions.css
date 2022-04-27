@@ -50,6 +50,8 @@ img {
     width: 100px;
     background-color: #d9d9d9;
     border-radius: 50%;
+    border: 2px solid #abc9d2;
+
     display: inline-block;
     margin: 10px;
     text-align: center;
@@ -59,3 +61,4 @@ img {
     font-weight: 900;
     color:#79a9b7;
 }
+
