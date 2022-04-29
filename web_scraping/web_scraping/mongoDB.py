@@ -1,4 +1,4 @@
-import pymongo
+from pymongo import MongoClient
 import json
 
 class MongoDB():
@@ -12,7 +12,7 @@ class MongoDB():
         CONNECTION_STRING = credentials_file.read()
 
         # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-        client = pymongo.MongoClient(CONNECTION_STRING)
+        client = MongoClient(CONNECTION_STRING)
 
         # Create the database for our example (we will use the same database throughout the tutorial
         return client['SocialMediaCaregivingResearch']
