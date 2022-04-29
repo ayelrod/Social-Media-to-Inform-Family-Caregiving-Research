@@ -1,4 +1,4 @@
-.DS_Store
+*.DS_Store
 credentials.txt
 currentchoropleth.html.icloud
 pastchoropleth.html.icloud
