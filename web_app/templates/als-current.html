@@ -3,7 +3,7 @@
 {% block content %}
 <head>
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/als-current.css') }}">
-    <h3 style="text-align:center">An NLP analysis of <a href="https://www.alsforums.com/community/forums/current-caregivers.59/" target="_blank" rel="noopener noreferrer" style="color:#abc9d2;">ALSForums (Current Caregivers)</a></h3>
+    <a name="top"><h3 style="text-align:center">An NLP analysis of <a href="https://www.alsforums.com/community/forums/current-caregivers.59/" target="_blank" rel="noopener noreferrer" style="color:#abc9d2;">ALSForums (Current Caregivers)</a></h3></a>
 </head>
 <body>
 
@@ -41,9 +41,9 @@
         <li>Average Time Between Diagnosis and Joining the Forum: 423 days</li>
         <li>Number of distinct cities:  1661</li>
     </ul>
-
+    <br>
     <div class="descriptive_stats">
-        <a href="/currentchoropleth"><img id="choropleth" src="{{url_for('static', filename='images/current_choropleth.png')}}"  alt="Map of US describing number of users per state" ></a>
+        <a href="/currentchoropleth" target="_blank" rel="noopener noreferrer"><img id="choropleth" src="{{url_for('static', filename='images/current_choropleth.png')}}"  alt="Map of US describing number of users per state" ></a>
         <p class="caption">A visual of the number of users of the ALS Current Caregiver Forum per state in the US. <br><em>Click on the map for the interactive version!</em></p>
 
         <br>
@@ -175,8 +175,12 @@ if(typeof(LDAvis) !== "undefined"){
         <p>The time series graph above shows the emotion severity score for each of the 8 emotions across the time range from 2018 to 2022. The mean score for each day in the time range was calculated for each emotion. The y-axis shows the mean emotion severity score for each of the emotions, and the x-axis is divided into 6 month intervals. We can observe how emotions changed before and after the Covid 19 Pandemic.</p>
         <br><br>
         <img id="piechart" src="{{url_for('static', filename='images/current_piechart.png')}}"> <br>
-        <p class="caption">The pie chart above shows the mean score for each of the 8 emotions across all posts on the site from 2018 to 2022. </p>
+        <p class="caption">All of the posts were assigned a dominant emotion by the NRCLex algorithm. The pie chart above shows the distribution of each of the 8 emotions across all posts on the site from 2018 to 2022. </p>
     </div>
 
+
+    <div id="topbutton">
+    <button style="text-align: center;"><a href="#top">Top</a></button>
+    </div>
 </body>
 {% endblock %}

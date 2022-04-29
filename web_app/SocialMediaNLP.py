@@ -20,6 +20,10 @@ def index():
 def alz():
     return render_template('alz.html')
 
+@app.route('/alz_pre_vs_post')
+def alz_pre_post():
+    return render_template('alz_pre_vs_post.html')
+
 @app.route('/als-current')
 def als_current():
     return render_template('als-current.html')
