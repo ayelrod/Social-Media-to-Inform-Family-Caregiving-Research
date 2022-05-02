@@ -28,6 +28,10 @@ def alz_pre_post():
 def als_current():
     return render_template('als-current.html')
 
+@app.route('/als-current_pre_vs_post')
+def als_current_pre_post():
+    return render_template('als-current_pre_vs_post.html')
+
 @app.route('/als-past')
 def als_past():
     return render_template('als-past.html')
