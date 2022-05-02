@@ -62,3 +62,28 @@ img {
     color:#79a9b7;
 }
 
+.emotionanalysis-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+}
+
+#timeseries {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#topbutton {
+    display:flex;
+    flex-direction: row;
+    font-style: #abc9d2;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    border-radius: 20%;
+    border:2px solid #abc9d2;
+    background-color: #d9d9d9;
+}
