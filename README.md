@@ -104,3 +104,16 @@ Topic Modeling is done using a process called LDA (Latent Dirichlet Allocation),
 Sentiment Analysis was done using NLTK's SentimentIntensityAnalyzer and NaiveBayesClassifier. The first step was to mark each post as positive or negative. We did this by using the SentimentIntensityAnalyzer to get the polarity of text, which is a value from [-1, 1] with -1 being the most negative and 1 being the most positive. Neutral posts (value of 0) are marked as Negative during the sentiment analysis. We also got the subjectivity of each post, which is a value from [0, 1] with 0 being the most objective and 1 being the most subjective. Labeling posts as positive or negative is done using VADER (Valence Aware Dictionary for Sentiment Reasoning). This model takes into account the general sentiment of a post (polarity) and the intensity of emotion. The model can also understand context at a basic level when analyzing words.
 
 Once that was done, we could use NLTK's Naive Bayes Classifier to get a better sense of which words are linked to negative and positive sentiments. This output shows us how much more likely a word is to be associated with either a negative or positive sentiment.
+
+### Emotion Analysis
+Emotion Analysis was done using the NRCLex library. This library mainly applies emotion scores for 10 different emotions by looking at the words in the text and finding ones commonly associated with an emotion. These emotions are:
+- fear
+- anger
+- anticipation
+- trust
+- surprise
+- positive
+- negative
+- sadness
+- disgust
+- joy
