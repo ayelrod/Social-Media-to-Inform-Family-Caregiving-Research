@@ -65,15 +65,15 @@ img {
 }
 
 #topbutton {
-    display:flex;
-    flex-direction: row;
     font-style: #abc9d2;
-    align-items: center;
-    justify-content: center;
-}
-
-button {
     border-radius: 20%;
     border:2px solid #abc9d2;
     background-color: #d9d9d9;
+}
+
+#tothetop {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
