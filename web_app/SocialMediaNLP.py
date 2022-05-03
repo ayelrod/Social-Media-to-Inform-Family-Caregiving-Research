@@ -36,6 +36,10 @@ def als_current_pre_post():
 def als_past():
     return render_template('als-past.html')
 
+@app.route('/als-past_pre_vs_post')
+def als_past_pre_post():
+    return render_template('als-past_pre_vs_post.html')
+
 @app.route('/ac-questions')
 def ac_questions():
     return render_template('ac-questions.html')
