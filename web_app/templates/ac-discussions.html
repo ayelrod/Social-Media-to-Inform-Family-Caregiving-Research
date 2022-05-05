@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ac-discussions.css') }}">
+    <h3 style="text-align:center">An NLP analysis of <a href="https://www.agingcare.com/caregiver-forum/discussions" style="color:#abc9d2;">AgingCare Discussions Forum</a></h3>
+</head>
+
+<body>
+
+    <div id="links">
+        <a href="#topicmodeling"><span class="circle">Topic Modeling</span></a>
+        <a href="#sentiment"><span class="circle">Sentiment Analysis</span></a>
+        <a href="#emotion"><span class="circle">Emotion Analysis</span></a>
+    </div>
+    
+    <div class="section-header">
+        <h3>About</h3>
+    </div>
+    <div class="about">
+        <p>
+        This is a breakdown of the Natural Language Processing (NLP) performed on the data gathered solely from the AgingCare Discussion forum. Further documentation can be found <a href="/documentation">here.</a> </p>
+
+    </div>
+
+   <br>
+   <h5>Statistics:</h4> 
+    <p>The following statistics describe the AgingCare Discussion Forum 2008 to date.</p>
+
+    <ul style="font-size:15px;background-color: #eef4f6;">
+        <li>Number of Unique Users: 12947</li>
+        <li>Number of Original Posts: 10629</li>
+        <li>Number of Replies: 114659</li>
+        <li>Average Number of Posts per User (Including Replies): 9.68</li>
+        <li>Average Number of Original Posts per User: 0.82</li>
+        <li>Average Number of Replies per User: 8.86</li>
+        <li>Original Posts vs Replies Ratio: 0.09</li>
+        <li>Average Number of Words per Post: 131.28</li>
+        <li>Top 10 Keywords & Count: 
+        <pre>
+        Burnout                 : 2008
+        Alzheimer's & Dementia  : 1588 
+        Relationships           : 1509 
+        Family Caregiver        : 1352
+        Mental Health           : 1099
+        End of Life             : 752 
+        Caregiver Support       : 576 
+        Care Decisions          : 519 
+        Senior Health           : 378
+        Financial Planning      : 310 
+        </pre>
+        </li>
+    </ul>
+</body>
+{% endblock %}

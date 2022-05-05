@@ -44,6 +44,14 @@ def als_past_pre_post():
 def ac_questions():
     return render_template('ac-questions.html')
 
+@app.route('/ac-discussions')
+def ac_discussions():
+    return render_template('ac-discussions.html')
+
+@app.route('/ac')
+def ac():
+    return render_template('ac.html')
+
 # @app.route('/team')
 # def team():
 #     return render_template('team.html')

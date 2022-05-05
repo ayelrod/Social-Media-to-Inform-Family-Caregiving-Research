@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ac.css') }}">
+    <h3 style="text-align:center">An NLP analysis of <a href="https://www.agingcare.com/caregiver-forum" style="color:#abc9d2;">AgingCare</a></h3>
+</head>
+
+<body>
+
+    <div id="links">
+        <a href="#topicmodeling"><span class="circle">Topic Modeling</span></a>
+        <a href="#sentiment"><span class="circle">Sentiment Analysis</span></a>
+        <a href="#emotion"><span class="circle">Emotion Analysis</span></a>
+    </div>
+
+        
+    <div class="section-header">
+        <h3>About</h3>
+    </div>
+
+    <div class="about">
+        <p>
+        AgingCare (agingcare.com) is a website that allows caregivers to share their experiences as well as ask questions and participate in discussions. 
+        Caregivers have access to a variety of resources on the site such as elder law attorneys, care options, and senior housing options.  </p>
+        <p>We have scraped these posts from the website with posts dating back to January of 2008, the start of the message board. You can download the data set here.</p>
+
+        <p>We performed natural language processing (NLP) on the data we gathered, including topic modeling and sentiment analysis. 
+            Further documentation can be found <a href="/documentation">here.</a> </p>
+    </div>
+
+    <p>Individual NLP on the Questions (<a href="/ac-questions">click here</a>) and Discussion forums (<a href="/ac-discussions">click here</a>) </p>
+
+    <br>
+   <h5>Statistics:</h4> 
+    <p>The following statistics describe the AgingCare Discussion Forum 2008 to date.</p>
+
+    <ul style="font-size:15px;background-color: #eef4f6;">
+        <li>Number of Unique Users: 49162</li>
+        <li>Number of Original Posts: 58378</li>
+        <li>Number of Replies: 471670</li>
+        <li>Average Number of Posts per User (Including Replies): 10.78</li>
+        <li>Average Number of Original Posts per User: 1.19 </li>
+        <li>Average Number of Replies per User: 9.59</li>
+        <li>Original Posts vs Replies Ratio: 0.12</li>
+        <li>Average Number of Words per Post: 122.22</li>
+        <li>Top 10 Keywords & Count: 
+        <pre>
+        Alzheimer's & Dementia  : 8875 
+        Relationships           : 5744 
+        Burnout                 : 4559
+        Family Caregiver        : 4331 
+        Care Decisions          : 3862 
+        Financial Planning      : 3584 
+        Medicaid                : 2902 
+        Power of Attorney (POA) : 2873
+        Paying for Care         : 2738 
+        Mental Health           : 2694
+        </pre>
+        </li>
+    </ul>
+
+</body>
+{% endblock %}
