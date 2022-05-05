@@ -19,7 +19,7 @@
     </div>
     <div class="about">
         <p>
-        This is a breakdown of the Natural Language Processing (NLP) performed on the data gathered solely from the AgingCare Discussion forum. Further documentation can be found <a href="/documentation">here.</a> </p>
+        This is a breakdown of the Natural Language Processing (NLP) performed on the data gathered solely from the AgingCare Discussion forum. Further documentation on the NLP can be found <a href="/documentation">here.</a> </p>
 
     </div>
 
@@ -51,5 +51,41 @@
         </pre>
         </li>
     </ul>
+    
+    <a name="topicmodeling"><div class="section-header">
+        <h3>Topic Modeling</h3>
+    </div></a>
+    <p>The following topic modeling results were achieved through LDA (Latent Dirichlet Allocation), an unsupervised machine learning model. More information can be found on the <a href="/documentation">Documentation</a> page.</p>
+
+    <h5>Topic Modeling on Titles of Posts</h5>
+    <img src="{{url_for('static', filename='images/acd_TM1.png')}}">
+    <br>
+    <img src="{{url_for('static', filename='images/acd_TM2.png')}}">
+        
+    <!-- topic modeling here -->    
+
+    <a name="sentiment"><div class="section-header">
+        <h3>Sentiment Analysis</h3>
+    </div></a>
+    <p>
+        The results below show the number of positive, negative, and neutral sentiment posts in the data set. The most informative features show words that were most strongly correlated with positive or negative posts. If a post contains the word shown on the left, the probability of the post being Negative:Positive or Positive:Negative is shown by the ratio on the right.
+    </p>
+    <img src="{{url_for('static', filename='images/acd_SA.png')}}" style="width:750px;height:400px;">
+
+    <a name="emotion"><div class="section-header">
+        <h3>Emotion Analysis</h3>
+    </div></a>
+    <div class="emotionanalysis-images">
+        <!-- <img id="timeseries" src="{{url_for('static', filename='images/AgingCare-Timeseries.png')}}"> -->
+        <p">The time series graph above shows the emotion severity score for each of the 8 emotions across the time range from 2018 to 2022. The mean score for each day in the time range was calculated for each emotion. The y-axis shows the mean emotion severity score for each of the emotions, and the x-axis is divided into 6 month intervals. We can observe how emotions changed before and after the Covid 19 Pandemic.</p>
+        <br><br>
+        <img id="piechart" src="{{url_for('static', filename='images/acd_EA.png')}}" style="width:500px;height:400px;"> <br>
+        <p class="caption">All of the posts were assigned a dominant emotion by the NRCLex algorithm. The pie chart above shows the distribution of each of the 8 emotions across all posts on the site from 2018 to 2022. </p>
+    </div>
+
+
+    <div id="tothetop">
+    <button id="topbutton" style="text-align: center;"><a href="#top">Top</a></button>
+    </div>
 </body>
 {% endblock %}
