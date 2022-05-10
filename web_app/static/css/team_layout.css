@@ -1,0 +1,35 @@
+#team {
+    font-weight: 700;
+    color:#4974a5;
+}  
+
+.section-header {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+h3.section-header {
+    padding-left: 10px;
+    padding-left: 50x;
+
+}
+.team {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    border-radius: 50%;
+    border: 10px solid #abc9d2;
+    margin: 10px;
+  }

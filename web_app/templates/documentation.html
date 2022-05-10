@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/documentation.css') }}">
+</head>
+<body>
+    
+    <div class="section-header">
+        <h3>Topic Modeling</h3>
+    </div>
+    <p>Topic Modeling was done using a process called LDA (Latent Dirichlet Allocation), provided in the gensim and pyLDAvis libraries. LDA outputs a 
+    specified number of topics with words that are most likely to belong to those topics. It uses conditional probability to group words from documents.</p>
+
+    <div class="section-header">
+        <h3>Sentiment Analysis</h3>
+    </div>
+    <p>Sentiment Analysis was done using NLTK's SentimentIntensityAnalyzer and NaiveBayesClassifier. The first step was to mark each post as positive or 
+    negative. We did this by using the SentimentIntensityAnalyzer to get the polarity of text, which is a value from [-1, 1] with -1 being the most negative 
+    and 1 being the most positive. Neutral posts (value of 0) are marked as Negative during the sentiment analysis. We also got the subjectivity of each post, 
+    which is a value from [0, 1] with 0 being the most objective and 1 being the most subjective. Labeling posts as positive or negative is done using VADER 
+    (Valence Aware Dictionary for Sentiment Reasoning). This model takes into account the general sentiment of a post (polarity) and the intensity of emotion. 
+    The model can also understand context at a basic level when analyzing words.</p>
+
+    <p>Once that was done, we used NLTK's Naive Bayes Classifier to observe which words are linked to negative and positive sentiments. 
+    This output shows us how much more likely a word is to be associated with either a negative or positive sentiment.</p>
+    
+    <div class="section-header">
+        <h3>Emotion Analysis</h3>
+    </div>
+    <p>Emotion Analysis is another form of natural language processing that aims to classify text as a specific emotion, like joy or anger, as well as the severity
+        of the emotion. The Python library we used is called <a href="https://pypi.org/project/NRCLex/">NRCLex</a>. This package measures the following emotional affects: 
+        <ul>
+            <li>fear</li>
+            <li>anger</li>
+            <li>anticipation</li>
+            <li>trust</li>
+            <li>surprise</li>
+            <li>positive</li>
+            <li>negative</li>
+            <li>sadness</li>
+            <li>disgust</li>
+            <li>joy</li>
+        </ul>
+    </p>
+</body>
+{% endblock %}

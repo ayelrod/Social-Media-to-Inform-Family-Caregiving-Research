@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <head>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/team_layout.css') }}">
+    </head>
+    
+    <body>
+    <main>
+        <div class="section-header">
+            <h3 style="text-align:left">Our Developers</h3>
+        </div>
+        <div class="team">
+            <div class="profile">
+                <p>Lucas Rodriguez </p>
+                <img src="{{url_for('static', filename='images/lucas-circle.png')}}" style="width:200px;height:200px;" >   
+            </div>
+            <div class="profile">
+                <p>Shivani Parekh</p>
+                <img src="{{url_for('static', filename='images/shivani-circle.png')}}" style="width:200px;height:200px;" > 
+            </div>
+            <div class="profile">
+                <p>Urmi Lalchandani</p>
+                <img src="{{url_for('static', filename='images/urmi-circle.png')}}" style="width:200px;height:200px;" > 
+            </div>
+            <div class="profile">
+                <p>Gem Gasca</p>
+                <img src="{{url_for('static', filename='images/gem-circle.png')}}" style="width:200px;height:200px;" >   
+            </div>
+        </div>
+        <div class="section-header">
+            <h3 style="text-align:left">Our Researchers</h3>
+        </div>
+        <div class="team">
+            <div class="profile">
+                <p>Dr. Yong Choi </p>
+                <img src="{{url_for('static', filename='images/Choi00-circle.png')}}" style="width:200px;height:200px;" >
+            </div>
+            <div class="profile">
+                <p>Jiyeong Kim</p>
+                <img src="{{url_for('static', filename='images/jiyeong-circle.png')}}" style="width:200px;height:200px;" >
+            </div>
+            <div class="profile">
+                <p>Salhah Alomairi</p>
+                <img src="{{url_for('static', filename='images/salhah-circle.png')}}" style="width:200px;height:200px;" >
+            </div>
+        </div>
+    </main>
+    </body>
+{% endblock %}
+static/css/images

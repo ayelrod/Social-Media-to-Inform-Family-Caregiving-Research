@@ -81,10 +81,10 @@ class AlzSpider(scrapy.Spider):
         # Yield posts
         if len(dates) == len(posts):
             for i in range(len(dates)):
-                # If the post is not the first one in the list, it is a reply
-                # If the url is not the first page of replies, the posts are all replies
-                reply = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
-                post = AlzPost(dates[i], title, posts[i], reply, user_names[i], user_dates[i], user_num_posts[i], response.request.url)
+                # If the post is not the first one in the list, it is an answer 
+                # If the url is not the first page of replies, the posts are all answers
+                answer = (i != 0) or (re.match("^(.*?)page=([2-9][0-9]*|1[0-9]+)", response.request.url) != None)
+                post = AlzPost(dates[i], title, posts[i], answer, user_names[i], user_dates[i], user_num_posts[i], response.request.url)
                 if self.write_to_database:
                     post.writeToDatabase(self.collection_name)
                 yield post.toJSON()    

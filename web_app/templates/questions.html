@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/questions.css') }}">
+        <div class="section-header">
+            <h3>Ask a Question</h3>
+        </div>
+    </head>
+    
+    {% for message in get_flashed_messages() %}
+        <p style="color:red" align='center'>{{ message }}</p>
+    {% endfor %}
+
+    <form method="post">
+    <ul>
+        <label for="first-name">First Name:  </label>
+        <!-- <br> -->
+        <input type="text" name="first-name"
+               placeholder="First Name"
+               value="{{ request.form['first-name'] }}"></input>
+        <br>
+
+        <br>
+        <label for="last-name">Last Name:  </label>
+        <!-- <br> -->
+        <input type="text" name="last-name"
+               placeholder="Last Name"
+               value="{{ request.form['last-name'] }}"></input>
+        <br>
+
+        <br>
+        <label for="email">Email:  </label>
+        <!-- <br> -->
+        <input type="email" name="email"
+               placeholder="Email"
+               value="{{ request.form['email'] }}"></input>
+        <br>
+
+        <br>
+        <label for="affiliation">Affiliation:  </label>
+        <!-- <br> -->
+        <input type="text" name="affiliation"
+               placeholder="Affiliation"
+               value="{{ request.form['affiliation'] }}"></input>
+        <br>
+
+        <br>
+        <label for="question">Question:  </label>
+        <!-- <br> -->
+        <textarea name="question"
+                  placeholder="Question"
+                  rows="15"
+                  cols="60"
+                  >{{ request.form['question'] }}</textarea>
+        <br>
+        <br>
+
+        <button type="submit">Submit</button>
+    </ul>
+    </form>
+{% endblock %}
