@@ -68,6 +68,10 @@ def pastchoropleth():
 def currentchoropleth():
     return render_template('currentchoropleth.html')
 
+@app.route('/reddit')
+def reddit():
+    return render_template('reddit.html')
+
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():
     if request.method == 'POST':
