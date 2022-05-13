@@ -1,7 +1,7 @@
 # Leveraging Social Media Data to Inform Family Caregiving Research
 
 ## About
-  In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offer the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for no or low cost compared to traditional community-engagement methods such as interviews and focus groups. We intend to create a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data will be collected by web-scraping posts and replies from two online forums (AlzConnected and ALSForums) and storing it in a database. This will be followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We will also scrape data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, we will use the data to answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collect will be adaptable and made public to create opportunities for collaboration in answering future research questions. 
+  In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offer the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for no or low cost compared to traditional community-engagement methods such as interviews and focus groups. We intend to create a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data will be collected by web-scraping posts and replies from several online forums (AlzConnected, ALSForums, AgingCare, Reddit) and storing it in a database. This will be followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We will also scrape data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, we will use the data to answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collect will be adaptable and made public to create opportunities for collaboration in answering future research questions. 
 
 ## Install and Run Web Scrapers
 ### Requirements
@@ -87,6 +87,17 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 - *user_name*: the username of the post author
 - *reply*: True if the post is a reply, False if the post is the original post in the thread
 - *keywords*: the keywords selected for main post by user
+- *url*: the URL to the post
+
+### Reddit Data (r/Alzheimers, r/CaregiverSupport, r/Caregivers, r/Caregiving)
+- *post_id*: The ID of the post
+- *date*: The date and time of the post
+- *title*: The title of the post
+- *body*: The body of the post
+- *num_upvotes*: The number of upvotes the post received
+- *num_downvotes*: The number of downvotes the post received
+- *reply*: True if the post is a reply, False if the post is the original post in the thread
+- *user_name*: the username of the post author
 - *url*: the URL to the post
 
 ## NLP
