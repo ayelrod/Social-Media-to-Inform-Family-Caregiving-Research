@@ -1,7 +1,7 @@
 # Leveraging Social Media Data to Inform Family Caregiving Research
 
 ## About
-  In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offer the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for no or low cost compared to traditional community-engagement methods such as interviews and focus groups. We intend to create a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data will be collected by web-scraping posts and replies from several online forums (AlzConnected, ALSForums, AgingCare, Reddit) and storing it in a database. This will be followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We will also scrape data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, we will use the data to answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collect will be adaptable and made public to create opportunities for collaboration in answering future research questions. 
+In recent years, social media has grown exponentially in its use for health-related purposes and, in turn, has become an untapped data source for health research. Social media data offer the potential to observe and generate valuable insight into patients and caregivers’ concerns and priorities, for no or low cost compared to traditional community-engagement methods such as interviews and focus groups. We intend to create a public data repository from family caregiver online discussion forums to enhance the ability to inform and design family caregiving research. The data will be collected by web-scraping posts and replies from several online forums (AlzConnected, ALSForums, AgingCare, Reddit) and storing it in a database. This will be followed by machine learning and natural language processing to perform sentiment analysis on the text as well as topic modeling. We will also scrape data about the forum users so that future research can explore user-specific research questions. After conducting sentiment analysis, we will use the data to answer various research questions regarding the unmet needs of caregivers, the health of caregivers, and the effects of the pandemic. The data we collect will be adaptable and made public to create opportunities for collaboration in answering future research questions. 
 
 ## Install and Run Web Scrapers
 ### Requirements
@@ -14,7 +14,7 @@ pip install scrapy
 pip install dnspython
 pip install pymongo
 ```
-### Running Scrapers
+### Running Scrapers (AlzConnected, AlsForums, and AgingCare)
 The scraped data is written to a MonogoDB database as it is scraped. The credentials for this database need to be provided to the program before running. These credentials will be in the form of a MongoDB Connection String. 
 Once the connection string is obtained, paste it into a file called '''credentials.txt''' and insert it into the ./web_scrapers/web_scrapers directory.
 
@@ -40,6 +40,9 @@ Possible values of <spider_name>
 - **ac-discussion** for this forum: https://www.agingcare.com/caregiver-forum/discussions
 
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
+
+### Running Scrapers (Reddit)
+To scrape reddit, PRAW (Python Reddit API Wrapper) requires account credentials. 
 
 ### Options
 There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
@@ -103,13 +106,13 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 
 ## NLP
 ### Pre-Processing and Tokenization
-In order to perform NLP on the text data, we first need to clean it and tokenize it. First, we split the text into a list of words. Punctuations and stopwords are then removed and we are left with our words of interest. The words are then lemmatized by stripping words down to their base. An example of this would be stripping the word "being" to "be" to get its most basic form. This leaves us with our tokens in the form of a list of words, which are used to represent each post. 
+In order to perform NLP on the text data, we first need to clean it and tokenize it. First, we split the text into a list of words. The words are then lemmatized by stripping words down to their base. An example of this would be stripping the word "being" to "be" to get its most basic form. Punctuations and stopwords (common words which do not add meaning to our analysis, like "the") are then removed. This leaves us with our tokens in the form of a list of words, which are used to represent each post. 
 
-In Sentiment Analysis, further processing is needed to turn these lists of words into features. The first step in doing this is to find the frequency of each word in all the posts of interest combined. Then we take the 2000 most frequent words and those become our features. A post is then represented by a Python dictionary which maps each feature to a boolean value of wether or not that feature is contained in the document.    
+In Sentiment Analysis, further processing is needed to turn these lists of words into features. The first step in doing this is to find the frequency of each word in all the posts of interest combined. Then we take the 2000 most frequent words and those become our features. A post is then represented by a Python dictionary which maps each feature to a boolean value of whether or not that feature is contained in the document.  
   
   
 ### Topic Modeling
-Topic Modeling is done using a process called LDA (Latent Dirichlet Allocation), provided in the gensim and pyLDAvis libraries. LDA outputs a specified number of topics with words that are most likely to belong to those topics.  
+Topic Modeling is done using a process called LDA (Latent Dirichlet Allocation), provided in the gensim and pyLDAvis libraries. LDA outputs a specified number of topics with words that are most likely to belong to those topics. First, a bigrams model is created using gensim. This combines words in the token lists that are often found together (for example, "moving" and "forward" are put together to become "moving_forward"). Then, the tokenized words are put into a corpus, which is put into the LDA model.
   
   
 ### Sentiment Analysis
