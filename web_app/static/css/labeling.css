@@ -1,0 +1,28 @@
+
+#postdata {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    gap: 20px;
+}
+
+#body-text {
+    border: 2px;
+}
+
+button[type=submit]{
+    background-color: #4974a5;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+body {
+    background-color: white;
+    text-align: center;
+}

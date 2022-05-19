@@ -2,11 +2,16 @@ from flask import Flask, render_template, request, url_for, flash, redirect, ses
 import smtplib 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pymongo import MongoClient
 
 app = Flask(__name__)
 credentials = open('credentials.txt', 'r')
 app.config['SECRET_KEY'] = credentials.readline()
 email_password = credentials.readline()
+
+client = MongoClient('localhost', 27017)
+db = client.flask_db
+alz = db.AlzConnected
 
 @app.route('/')
 def index():
@@ -71,6 +76,16 @@ def currentchoropleth():
 @app.route('/reddit')
 def reddit():
     return render_template('reddit.html')
+
+@app.route('/labeling')
+def labeling():
+    unlabeled_post = db.AlzConnected.find({ "support_type": "" })[0]
+    post_id = unlabeled_post.id
+    if request.method == 'POST':
+        support_type = request.form['support']
+        db.AlzConnected.find_one_and_update({"id": post_id} , {"support_type": support_type})
+
+    return render_template('labeling.html', body=unlabeled_post.body)
 
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():

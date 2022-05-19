@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/labeling.css') }}">
+</head>
+
+<body>
+
+    <h3>Support Type Labeling</h3>
+
+    <form id="postdata">
+        <label>Post Body:</label>
+        <p id="body-text">{{ body }}</p>
+
+        <label for="support_type">What type of support is this post seeking?</label>
+        <select name="support">
+            <option value="instructional">Instructional</option>
+            <option value="emotional">Emotional</option>
+            <option value="instrumental">Instrumental</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+{% endblock %}
