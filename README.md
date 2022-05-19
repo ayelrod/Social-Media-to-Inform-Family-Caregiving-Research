@@ -62,6 +62,7 @@ There is also a line that should be changed in ./web_scraping/web_scraping/mongo
 - *user_date_joined*: the date the user joined the site (between 08/17/2011 - 02/18/2022)
 - *user_num_posts*: the number of posts the user has made on the site
 - *url*: the URL to the post
+- *support_type*: Some posts may have a support_type field. These were added through manual labeling and designate the support type that the post is requesting
 
 ### AlsForums Data
 - *post_id*: the post_id is a field that can be used to link posts to eachother. All posts within the same thread have the same post_id. 
