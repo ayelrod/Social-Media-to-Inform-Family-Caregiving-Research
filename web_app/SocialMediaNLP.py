@@ -8,9 +8,10 @@ app = Flask(__name__)
 credentials = open('credentials.txt', 'r')
 app.config['SECRET_KEY'] = credentials.readline()
 email_password = credentials.readline()
+CONNECTION_STRING = credentials.readline()
 
-client = MongoClient('localhost', 27017)
-db = client.flask_db
+client = MongoClient(CONNECTION_STRING)
+db = client['SocialMediaCaregivingResearch']
 alz = db.AlzConnected
 
 @app.route('/')
@@ -77,15 +78,18 @@ def currentchoropleth():
 def reddit():
     return render_template('reddit.html')
 
-@app.route('/labeling')
+@app.route('/labeling', methods=(['GET', 'POST']))
 def labeling():
     unlabeled_post = db.AlzConnected.find({ "support_type": "" })[0]
-    post_id = unlabeled_post.id
+    post_id = unlabeled_post["_id"]
     if request.method == 'POST':
         support_type = request.form['support']
-        db.AlzConnected.find_one_and_update({"id": post_id} , {"support_type": support_type})
+        print(post_id)
+        print(support_type)
+        db.AlzConnected.update_one({"_id": post_id} , { "$set" : {"support_type": support_type}})
+        return redirect(url_for('labeling'))
 
-    return render_template('labeling.html', body=unlabeled_post.body)
+    return render_template('labeling.html', body=unlabeled_post["body"])
 
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():
