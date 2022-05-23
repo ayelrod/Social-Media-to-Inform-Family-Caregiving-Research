@@ -38,6 +38,7 @@ Possible values of <spider_name>
 - **als_past_caregivers** for this forum: https://www.alsforums.com/community/forums/past-caregivers.60/
 - **ac** for this forum: https://www.agingcare.com/caregiver-forum/questions
 - **ac-discussion** for this forum: https://www.agingcare.com/caregiver-forum/discussions
+- **ac-questions** for this forum: https://www.agingcare.com/caregiver-forum/questions
 
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
 
