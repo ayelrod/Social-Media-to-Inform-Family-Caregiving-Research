@@ -8,18 +8,24 @@
 <body>
 
     <h3>Support Type Labeling</h3>
-
+    <br>
+    <p>Choose which type of support the author of this post is seeking: instructional, emotional, or instrumental.</p>
     <form id="postdata" method="post">
-        <label>Post Body:</label>
+        <label>Title:</label>
+        <p id="title">{{title}}</p>
+        <label>Body:</label>
         <p id="body-text">{{ body }}</p>
 
         <label for="support_type">What type of support is this post seeking?</label>
+        <div id="submission">
         <select name="support">
             <option value="instructional">Instructional</option>
             <option value="emotional">Emotional</option>
             <option value="instrumental">Instrumental</option>
+            <option value="none">None</option>
         </select>
         <button type="submit">Submit</button>
+    </div>
     </form>
 
 </body>

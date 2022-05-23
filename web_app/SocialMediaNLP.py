@@ -89,7 +89,7 @@ def labeling():
         db.AlzConnected.update_one({"_id": post_id} , { "$set" : {"support_type": support_type}})
         return redirect(url_for('labeling'))
 
-    return render_template('labeling.html', body=unlabeled_post["body"])
+    return render_template('labeling.html', body=unlabeled_post["body"], title=unlabeled_post["title"])
 
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():
