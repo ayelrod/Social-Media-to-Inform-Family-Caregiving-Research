@@ -115,8 +115,8 @@ def questions():
         else:
             port_number = 587
             msg = MIMEMultipart()
-            msg['From'] = 'socialmediafamilycaregivingresearch@gmx.com'
-            msg['To'] = 'socialmediafamilycaregivingresearch@gmx.com'
+            msg['From'] = 'socialmediafamilycaregivingresearch@outlook.com'
+            msg['To'] = 'socialmediafamilycaregivingresearch@outlook.com'
             msg['Subject'] = 'SocialMediaFamilyCaregivingResearch Question'
             message = 'First Name: ' + firstName + '\n' +\
                 'Last Name: ' + lastName + '\n' +\
@@ -125,11 +125,11 @@ def questions():
                 'Question: ' + question
             msg.attach(MIMEText(message))
             try:
-                mailserver = smtplib.SMTP('smtp.gmx.com',port_number)
+                mailserver = smtplib.SMTP('smtp-mail.outlook.com',port_number)
                 mailserver.ehlo()
                 mailserver.starttls()
-                mailserver.login("socialmediafamilycaregivingresearch@gmx.com", email_password)
-                mailserver.sendmail('socialmediafamilycaregivingresearch@gmx.com','socialmediafamilycaregivingresearch@gmx.com',msg.as_string())
+                mailserver.login("socialmediafamilycaregivingresearch@outlook.com", email_password)
+                mailserver.sendmail('socialmediafamilycaregivingresearch@outlook.com','socialmediafamilycaregivingresearch@outlook.com',msg.as_string())
                 mailserver.quit()
                 flash("Question submitted successfully!")
             except:
