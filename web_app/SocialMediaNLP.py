@@ -80,16 +80,25 @@ def reddit():
 
 @app.route('/labeling', methods=(['GET', 'POST']))
 def labeling():
+    if not session.get("initials"):
+        session["initials"] = ""
+    session.pop('logged_in', None)
     unlabeled_post = db.AlzConnected.find({ "support_type": "" })[0]
     post_id = unlabeled_post["_id"]
     if request.method == 'POST':
-        support_type = request.form['support']
-        print(post_id)
-        print(support_type)
-        db.AlzConnected.update_one({"_id": post_id} , { "$set" : {"support_type": support_type}})
-        return redirect(url_for('labeling'))
+        initials = request.form["initials"].upper()
+        if not initials or initials == "None":
+            flash("Initials required!")
+        elif len(initials) > 3 or not initials.isalnum():
+            flash("Invalid initials!") 
+        else:
+            session["initials"] = initials
+            support_type = request.form['support']
+            db.AlzConnected.update_one({"_id": post_id} , { "$set" : {"support_type": support_type}})
+            db.AlzConnected.update_one({"_id": post_id} , { "$set" : {"labeled_by": initials}})
+            return redirect(url_for('labeling'))
 
-    return render_template('labeling.html', body=unlabeled_post["body"], title=unlabeled_post["title"])
+    return render_template('labeling.html', body=unlabeled_post["body"], title=unlabeled_post["title"], initials=session["initials"])
 
 @app.route('/questions', methods=(['GET', 'POST']))
 def questions():

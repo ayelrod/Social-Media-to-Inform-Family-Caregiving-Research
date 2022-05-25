@@ -16,6 +16,10 @@
         <label>Body:</label>
         <p id="body-text">{{ body }}</p>
 
+        {% for message in get_flashed_messages() %}
+            <p style="color:red" align='center'>{{ message }}</p>
+        {% endfor %}
+
         <label for="support_type">What type of support is this post seeking?</label>
         <div id="submission">
         <select name="support">
@@ -24,6 +28,13 @@
             <option value="instrumental">Instrumental</option>
             <option value="none">None</option>
         </select>
+        
+        <label for="initials">Initials:  </label>
+        <input type="text" name="initials"
+               placeholder=""
+               value="{{ initials }}"></input>
+        <br>
+
         <button type="submit">Submit</button>
     </div>
     </form>
