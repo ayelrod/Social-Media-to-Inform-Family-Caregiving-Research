@@ -58,7 +58,7 @@ To scrape reddit, PRAW (Python Reddit API Wrapper) requires credentials. Follow 
 1. Create an account with reddit. 
 2. Go to this link: https://www.reddit.com/prefs/apps and create an app. Save the “personal use script” (14 characters long) and the “secret” (27 characters long). 
 3. Create a file called '''praw.ini''' and paste the following code in it, inputting your own information. This file should be placed into your working directory. 
-4. Modify the name of the subreddit and the dates you want to scrape posts from on the file '''reddit_scraper.py'''. Then run this file to scrape and push into the database.
+4. Modify the below options in '''reddit_scraper.py'''. Then run this file to scrape and push into the database.
 
 ```
 [DEFAULT]
@@ -70,7 +70,7 @@ password=[your account password]
 ```
 
 #### Options
-There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
+Some variables can be modified to fit your purposes. These can be found at the bottom of '''reddit_scraper.py''':
 
 - **collection**: The name of the MongoDB collection to send the data to. *This needs to be configured to match your database information*
 - **after_date**: The starting date to scrape posts  
