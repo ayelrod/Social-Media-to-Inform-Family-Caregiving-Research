@@ -22,12 +22,21 @@ label {
 #submission {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 50px;
 }
 
 select {
     width: 120px;
+}
+
+#initials {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+#init {
+    background-color: white;
 }
 
 button[type=submit]{

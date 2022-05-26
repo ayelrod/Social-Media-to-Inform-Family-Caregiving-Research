@@ -28,13 +28,13 @@
             <option value="instrumental">Instrumental</option>
             <option value="none">None</option>
         </select>
-        
-        <label for="initials">Initials:  </label>
-        <input type="text" name="initials"
-               placeholder=""
-               value="{{ initials }}"></input>
-        <br>
-
+        <div id="initials">   
+            <label id="init" for="initials">Initials:</label>
+            <input type="text" name="initials"
+                placeholder=""
+                value="{{ initials }}"></input>
+            <br>
+        </div> 
         <button type="submit">Submit</button>
     </div>
     </form>
