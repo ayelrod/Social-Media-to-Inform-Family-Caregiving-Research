@@ -42,6 +42,17 @@ Possible values of <spider_name>
 
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
 
+#### Options
+There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
+- **name**: This is the name of the spider, do not change it
+- **start_page**: The first page of the forum to scrape
+- **end_page**: The last page of the forum to scrape
+- **write_to_database**: If True, the data is written to the database. If False, the data is not written to the database.
+- **collection_name**: The name of the MongoDB collection to send the data to. *This needs to be configured to match your database information*
+
+There is also a line that should be changed in ./web_scraping/web_scraping/mongoDB.py that should be changed if you are using your own database. The last line should be changed to include your MongoDB database's name.
+
+
 ### Running Scrapers (Reddit)
 To scrape reddit, PRAW (Python Reddit API Wrapper) requires credentials. Follow these steps to create the credentials file. 
 1. Create an account with reddit. 
@@ -58,15 +69,14 @@ username=[your account username]
 password=[your account password]
 ```
 
-### Options
+#### Options
 There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
-- **name**: This is the name of the spider, do not change it
-- **start_page**: The first page of the forum to scrape
-- **end_page**: The last page of the forum to scrape
-- **write_to_database**: If True, the data is written to the database. If False, the data is not written to the database.
-- **collection_name**: The name of the MongoDB collection to send the data to. *This needs to be configured to match your database information*
 
-There is also a line that should be changed in ./web_scraping/web_scraping/mongoDB.py that should be changed if you are using your own database. The last line should be changed to include your MongoDB database's name.
+- **collection**: The name of the MongoDB collection to send the data to. *This needs to be configured to match your database information*
+- **after_date**: The starting date to scrape posts  
+- **before_date**: The ending date to scrape posts
+- **subreddit**: The name of the subreddit to scrape
+- **post_limit**: The maximum number of posts to scrape (default is 1)
 
 ## Data
 ### AlzConnected Data
