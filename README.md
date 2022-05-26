@@ -43,7 +43,20 @@ Possible values of <spider_name>
 ***NOTE:*** The scrapers will not run without a valid credentials string in credentials.txt
 
 ### Running Scrapers (Reddit)
-To scrape reddit, PRAW (Python Reddit API Wrapper) requires account credentials. 
+To scrape reddit, PRAW (Python Reddit API Wrapper) requires credentials. Follow these steps to create the credentials file. 
+1. Create an account with reddit. 
+2. Go to this link: https://www.reddit.com/prefs/apps and create an app. Save the “personal use script” (14 characters long) and the “secret” (27 characters long). 
+3. Create a file called '''praw.ini''' and paste the following code in it, inputting your own information. This file should be placed into your working directory. 
+4. Modify the name of the subreddit and the dates you want to scrape posts from on the file '''reddit_scraper.py'''. Then run this file to scrape and push into the database.
+
+```
+[DEFAULT]
+client_id=[the personal use script you saved earlier]
+client_secret=[the secret you saved earlier]
+user_agent=[name of your application]
+username=[your account username]
+password=[your account password]
+```
 
 ### Options
 There are some variables at the top of each spider that can be configured to change the behavior of the web scrapers. To configure the settings, open up the file containing the spider of interest. These spiders can be found in the ./web_scraping/web_scraping/spiders directory. Once the spider is open, you will see these variable at the top of the class definition:
