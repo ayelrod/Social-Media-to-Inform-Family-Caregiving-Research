@@ -156,3 +156,12 @@ Emotion Analysis was done using the NRCLex library. This library mainly applies 
 - sadness
 - disgust
 - joy
+
+### Running the Notebooks
+To run the NLP notebooks, the user will need to open the ipynb files in Google Colab or Jupyter Notebook. The Set Up section of the cells installs necessary dependencies and packages. The Text Preprocessing Functions section defines functions that will be used later to clean the data.
+
+IMPORTANT: When running the notebooks, there will be a cell under the header "Text Preprocessing Functions" that requires the user to upload the StopWords_Comprehensive.txt file included in this repository in the same folder as the nlp notebooks.
+
+The Database and Descriptive Stats section establishes the connection to the MongoDB database and creates the dataframes that the code uses later on. It also generates some statistics that describe the dataset.
+
+Below that, there are sections that produce NLP results including topic modeling, sentiment analysis, and emotion analysis.
